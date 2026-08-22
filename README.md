@@ -39,8 +39,8 @@ an explicit workflow heuristic, not a mastery score.
 
 ### From AnkiWeb
 
-The public AnkiWeb download code will be added here immediately after the first
-listing is accepted. In Anki, open **Tools → Add-ons → Get Add-ons…**, enter the
+Install from [AnkiWeb](https://ankiweb.net/shared/info/226947964) with download
+code **226947964**. In Anki, open **Tools → Add-ons → Get Add-ons…**, enter the
 code, install, and restart Anki.
 
 ### From GitHub

@@ -1,5 +1,8 @@
 # AnkiWeb listing source
 
+Public listing: https://ankiweb.net/shared/info/226947964
+Download code: **226947964**
+
 ## Title
 
 Vellum - Study Continuity, Time Machine, Recovery, and Debrief
