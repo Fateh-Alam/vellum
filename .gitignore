@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+coverage.xml
+.coverage
+dist/
+build/
+*.ankiaddon
+user_files/*
+!user_files/README.txt
+
+# Private/local qualification evidence is intentionally not public source.
+qa/
+docs/ANKI_CORE_INTEGRATION.md
+docs/IMPLEMENTATION_STATUS.md
+docs/LIVE_QUALIFICATION.md
+docs/PERFORMANCE_EVIDENCE.md
+docs/SPEC_TRACEABILITY.md

@@ -1,0 +1,262 @@
+:root {
+  --vellum-surface: color-mix(in srgb, Canvas 92%, transparent);
+  --vellum-border: color-mix(in srgb, CanvasText 13%, transparent);
+  --vellum-text: color-mix(in srgb, CanvasText 92%, transparent);
+  --vellum-muted: color-mix(in srgb, CanvasText 58%, transparent);
+  --vellum-accent: #6f6658;
+  --vellum-focus: #3b82f6;
+}
+
+.vellum-context {
+  --vellum-context-width: 288px;
+  position: fixed;
+  z-index: 2147483000;
+  top: 50%;
+  right: 10px;
+  width: 34px;
+  max-height: min(560px, calc(100vh - 32px));
+  color: var(--vellum-text);
+  font: 500 13px/1.4 system-ui, "Segoe UI", sans-serif;
+  transform: translateY(-50%);
+  transition: width 180ms ease;
+}
+
+#vellum-context,
+#vellum-context * { box-sizing: border-box; }
+#vellum-context button {
+  margin: 0;
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+.vellum-context[data-theme="dark"], .vellum-home[data-theme="dark"], .vellum-hud[data-theme="dark"], .vellum-overview[data-theme="dark"], .vellum-mind-notes[data-theme="dark"] { --vellum-surface: rgba(24, 24, 27, .96); --vellum-text: rgba(255, 255, 255, .92); --vellum-muted: rgba(255, 255, 255, .62); --vellum-border: rgba(255, 255, 255, .14); }
+.vellum-context[data-theme="light"], .vellum-home[data-theme="light"], .vellum-hud[data-theme="light"], .vellum-overview[data-theme="light"], .vellum-mind-notes[data-theme="light"] { --vellum-surface: rgba(250, 250, 248, .97); --vellum-text: rgba(20, 20, 22, .94); --vellum-muted: rgba(20, 20, 22, .6); --vellum-border: rgba(20, 20, 22, .14); }
+
+.vellum-context[data-side="left"] { left: 10px; right: auto; }
+.vellum-context.is-expanded { width: min(var(--vellum-context-width), calc(100vw - 32px)); }
+.vellum-context.vellum-reduced-motion { transition: none; }
+
+.vellum-context__toggle,
+.vellum-context__panel {
+  border: 1px solid var(--vellum-border);
+  background: var(--vellum-surface);
+  color: inherit;
+  backdrop-filter: blur(18px) saturate(1.1);
+  -webkit-backdrop-filter: blur(18px) saturate(1.1);
+}
+
+.vellum-context__toggle {
+  display: flex;
+  width: 100%;
+  min-height: 34px;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  border-radius: 11px;
+  padding: 6px 8px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.vellum-context__toggle:focus-visible,
+.vellum-context button:focus-visible { outline: 2px solid var(--vellum-focus); outline-offset: 2px; }
+.vellum-context__compact { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.vellum-context:not(.is-expanded) .vellum-context__compact { display: none; }
+.vellum-context.is-expanded .vellum-context__chevron { transform: rotate(180deg); }
+
+.vellum-context__panel {
+  display: none;
+  overflow: auto;
+  overflow-x: hidden;
+  max-height: calc(min(560px, 100vh - 32px) - 42px);
+  margin-top: 6px;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 16px 48px color-mix(in srgb, #000 16%, transparent);
+}
+
+.vellum-context.is-expanded .vellum-context__panel { display: block; }
+.vellum-context__eyebrow { color: var(--vellum-muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.vellum-context__title { margin: 4px 0 14px; color: inherit; font: 650 20px/1.15 system-ui, sans-serif; }
+.vellum-context__breadcrumbs { display: grid; gap: 2px; }
+.vellum-context__crumb { border: 0; border-radius: 7px; background: transparent; color: inherit; padding: 5px 6px; cursor: pointer; text-align: left; }
+.vellum-context__crumb:hover { background: color-mix(in srgb, CanvasText 7%, transparent); }
+.vellum-context__crumb + .vellum-context__crumb::before { content: "↓"; margin-right: 8px; color: var(--vellum-muted); }
+.vellum-context__badges { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 14px; }
+.vellum-context__badge { border: 1px solid var(--vellum-border); border-radius: 6px; padding: 2px 6px; color: var(--vellum-muted); font-size: 10px; }
+.vellum-context__details { display: grid; gap: 7px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--vellum-border); }
+.vellum-context__count { font-size: 14px; font-weight: 650; }
+.vellum-context__breakdown { display: flex; flex-wrap: wrap; gap: 8px; color: var(--vellum-muted); font-size: 11px; }
+.vellum-context__failures { color: #a45143; font-size: 11px; }
+.vellum-context__retention { color: var(--vellum-muted); font-size: 11px; }
+.vellum-context__loading { color: var(--vellum-muted); font-size: 11px; }
+.vellum-context__empty { margin: 0 0 8px; color: var(--vellum-muted); }
+.vellum-context__configure { border: 0; background: transparent; color: var(--vellum-accent); padding: 0; cursor: pointer; font-weight: 650; }
+.vellum-context__recover { width: 100%; margin-top: 14px; border: 0; border-radius: 9px; background: var(--vellum-accent); color: white; padding: 8px 10px; cursor: pointer; }
+.vellum-context__health { margin-top: 8px; font-size: 12px; font-weight: 600; }
+
+/* Win specificity against arbitrary card-template button rules. */
+#vellum-context .vellum-context__toggle,
+#vellum-context .vellum-context__panel { background: var(--vellum-surface); }
+#vellum-context .vellum-context__crumb,
+#vellum-context .vellum-context__configure {
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+#vellum-context .vellum-context__configure { color: var(--vellum-accent); }
+#vellum-context .vellum-context__recover {
+  margin-top: 14px;
+  border: 0;
+  background: var(--vellum-accent);
+  color: white;
+}
+
+.vellum-home { width: min(680px, calc(100% - 32px)); margin: 24px auto; display: grid; gap: 12px; text-align: left; color: var(--vellum-text); font-family: system-ui, "Segoe UI", sans-serif; }
+.vellum-home__greeting { margin: 0 0 2px; font-size: 22px; font-weight: 620; }
+.vellum-home__workload { display: flex; gap: 10px; align-items: baseline; color: var(--vellum-muted); }
+.vellum-home__workload strong { color: var(--vellum-text); font-size: 16px; }
+.vellum-home__card { border: 1px solid var(--vellum-border); border-radius: 14px; background: var(--vellum-surface); padding: 16px; }
+.vellum-home__card h3, .vellum-home__card p { margin: 6px 0; }
+.vellum-home__muted { color: var(--vellum-muted); font-size: 12px; }
+.vellum-home__eyebrow { color: var(--vellum-muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; }
+.vellum-home__action { border: 0; padding: 5px 0; background: transparent; color: var(--vellum-accent); cursor: pointer; font-weight: 650; }
+.vellum-home__presets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.vellum-home__presets button { border: 1px solid var(--vellum-border); border-radius: 9px; background: transparent; color: inherit; padding: 7px 11px; cursor: pointer; }
+.vellum-home__attention { display: flex; justify-content: space-between; gap: 16px; padding-top: 10px; }
+.vellum-home button:focus-visible { outline: 2px solid var(--vellum-accent); outline-offset: 2px; }
+
+.vellum-overview { width: min(520px, calc(100% - 28px)); margin: 18px auto 8px; border: 1px solid var(--vellum-border); border-radius: 13px; background: var(--vellum-surface); color: var(--vellum-text); padding: 12px 14px; font: 500 12px/1.35 system-ui, "Segoe UI", sans-serif; }
+.vellum-overview__copy { display: flex; justify-content: space-between; gap: 16px; color: var(--vellum-muted); }
+.vellum-overview__copy strong { color: var(--vellum-text); }
+.vellum-overview__presets { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+.vellum-overview__presets button { border: 1px solid var(--vellum-border); border-radius: 8px; background: transparent; color: inherit; padding: 5px 9px; cursor: pointer; }
+.vellum-overview__presets button:focus-visible { outline: 2px solid var(--vellum-focus); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vellum-context { transition: none; }
+}
+
+@media (prefers-contrast: more) {
+  .vellum-context, .vellum-home, .vellum-hud, .vellum-overview, .vellum-mind-notes { --vellum-border: CanvasText; --vellum-muted: CanvasText; }
+  .vellum-context__toggle, .vellum-context__panel, .vellum-home__card, .vellum-hud, .vellum-overview, .vellum-mind-notes { backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+
+@media (max-width: 520px) {
+  .vellum-context { top: auto; bottom: 10px; transform: none; }
+  .vellum-context.is-expanded { width: calc(100vw - 20px); }
+}
+
+.vellum-hud {
+  position: fixed;
+  z-index: 2147482999;
+  left: 14px;
+  bottom: 12px;
+  overflow: hidden;
+  border: 1px solid var(--vellum-border);
+  border-radius: 9px;
+  background: var(--vellum-surface);
+  color: var(--vellum-muted);
+  padding: 6px 9px;
+  font: 550 11px/1.2 system-ui, "Segoe UI", sans-serif;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.vellum-hud[data-placement="bottom_center"] { left: 50%; transform: translateX(-50%); }
+.vellum-hud[data-placement="bottom_right"] { left: auto; right: 14px; }
+.vellum-hud[data-placement="top"] { top: 12px; bottom: auto; left: 50%; transform: translateX(-50%); }
+.vellum-hud.is-time-up { color: #9a5a2c; border-color: color-mix(in srgb, #9a5a2c 40%, transparent); }
+.vellum-hud.has-progress::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: var(--vellum-hud-progress);
+  height: 2px;
+  background: var(--vellum-accent);
+}
+
+.vellum-mind-notes {
+  position: fixed;
+  z-index: 2147482998;
+  right: 14px;
+  bottom: 52px;
+  width: min(410px, calc(100vw - 28px));
+  max-height: min(420px, calc(100vh - 90px));
+  overflow: auto;
+  border: 1px solid var(--vellum-border);
+  border-radius: 14px;
+  background: var(--vellum-surface);
+  color: var(--vellum-text);
+  padding: 14px;
+  box-shadow: 0 16px 46px color-mix(in srgb, #000 15%, transparent);
+  font: 500 12px/1.45 system-ui, "Segoe UI", sans-serif;
+  text-align: left;
+  backdrop-filter: blur(18px) saturate(1.1);
+  -webkit-backdrop-filter: blur(18px) saturate(1.1);
+  animation: vellum-note-enter 180ms ease-out;
+}
+.vellum-mind-notes[hidden] { display: none; }
+.vellum-mind-notes.vellum-reduced-motion { animation: none; }
+.vellum-mind-notes__topic { margin-bottom: 9px; color: var(--vellum-muted); font-size: 11px; font-weight: 650; }
+.vellum-mind-notes__item { padding: 10px 0; border-top: 1px solid var(--vellum-border); }
+.vellum-mind-notes__age { color: var(--vellum-muted); font-size: 9px; font-weight: 750; letter-spacing: .1em; }
+.vellum-mind-notes__body { margin: 6px 0 8px; white-space: pre-wrap; }
+#vellum-mind-notes button { margin: 0; border: 0; background: transparent; color: var(--vellum-accent); padding: 2px 0; font: 650 11px/1.3 system-ui, sans-serif; cursor: pointer; }
+#vellum-mind-notes button:focus-visible { outline: 2px solid var(--vellum-focus); outline-offset: 2px; }
+.vellum-mind-notes__add { margin-top: 4px !important; }
+@keyframes vellum-note-enter { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+
+.vellum-debrief-home {
+  width: min(680px, calc(100% - 32px));
+  margin: 22px auto 8px;
+  display: grid;
+  gap: 10px;
+  color: var(--vellum-text);
+  font: 500 13px/1.45 system-ui, "Segoe UI", sans-serif;
+  text-align: left;
+}
+.vellum-debrief-home[hidden] { display: none; }
+.vellum-debrief-card {
+  border: 1px solid var(--vellum-border);
+  border-radius: 15px;
+  background: var(--vellum-surface);
+  padding: 17px 18px;
+  box-shadow: 0 12px 34px color-mix(in srgb, #000 10%, transparent);
+  animation: vellum-note-enter 180ms ease-out;
+}
+.vellum-debrief-card--complete { border-left: 3px solid var(--vellum-accent); }
+.vellum-debrief-card h2 { margin: 4px 0 2px; font-size: 20px; }
+.vellum-debrief-card p { margin: 6px 0; }
+.vellum-debrief-card__eyebrow { color: var(--vellum-muted); font-size: 10px; font-weight: 750; letter-spacing: .1em; }
+.vellum-debrief-card__metrics { color: var(--vellum-muted); font-size: 12px; }
+.vellum-debrief-card__handoff { font-size: 16px; }
+.vellum-debrief-card__actions { display: flex; gap: 9px; margin-top: 12px; }
+.vellum-debrief-card button { border-radius: 9px; padding: 7px 11px; cursor: pointer; font: 650 12px/1.2 system-ui, "Segoe UI", sans-serif; }
+.vellum-debrief-card__primary { border: 0; background: var(--vellum-accent); color: white; }
+.vellum-debrief-card__quiet { border: 1px solid var(--vellum-border); background: transparent; color: inherit; }
+.vellum-debrief-card button:focus-visible { outline: 2px solid var(--vellum-focus); outline-offset: 2px; }
+.vellum-debrief-home.vellum-reduced-motion .vellum-debrief-card { animation: none; }
+
+.vellum-onboarding-invite {
+  width: min(680px, calc(100% - 32px));
+  margin: 22px auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border: 1px solid var(--vellum-border);
+  border-radius: 15px;
+  background: var(--vellum-surface);
+  color: var(--vellum-text);
+  padding: 17px 18px;
+  font: 500 13px/1.45 system-ui, "Segoe UI", sans-serif;
+  text-align: left;
+}
+.vellum-onboarding-invite h2, .vellum-onboarding-invite p { margin: 4px 0; }
+.vellum-onboarding-invite button { border-radius: 9px; padding: 7px 11px; cursor: pointer; font: 650 12px/1.2 system-ui, "Segoe UI", sans-serif; white-space: nowrap; }
+.vellum-onboarding-invite button:focus-visible { outline: 2px solid var(--vellum-focus); outline-offset: 2px; }
+@media (max-width: 620px) { .vellum-onboarding-invite { align-items: stretch; flex-direction: column; } }

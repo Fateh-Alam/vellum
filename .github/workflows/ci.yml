@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        python: ["3.10", "3.13"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Unit tests
+        run: python -m unittest discover -s tests -t .. -v
+      - name: Compile Python
+        run: PYTHONPYCACHEPREFIX=/tmp/vellum-pycache python -m compileall -q .
+      - name: Check Reviewer JavaScript
+        run: node --check ui/assets/vellum.js
+      - name: Build and verify add-on
+        run: |
+          python scripts/build_package.py
+          python scripts/release_check.py
+      - uses: actions/upload-artifact@v4
+        if: matrix.python == '3.13'
+        with:
+          name: vellum-ankiaddon
+          path: dist/vellum-1.0.0.ankiaddon

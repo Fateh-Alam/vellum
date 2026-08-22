@@ -1,0 +1,142 @@
+{
+  "config_version": 2,
+  "enabled": true,
+  "onboarding_completed": false,
+  "onboarding_version": 0,
+  "onboarding_invitation_version": 0,
+  "modules": {
+    "context": true,
+    "recovery": true,
+    "time_machine": true,
+    "hud": true,
+    "resume": true,
+    "return_ramp": true,
+    "backtrack": true,
+    "mind_notes": true,
+    "session_debrief": true,
+    "topic_health": false,
+    "home_panel": true
+  },
+  "general": {
+    "show_menu": true,
+    "keyboard_shortcuts": true,
+    "animations": true,
+    "reduced_motion": false,
+    "debug_logging": false,
+    "theme": "auto"
+  },
+  "context": {
+    "side": "right",
+    "default_state": "collapsed",
+    "width": 288,
+    "auto_collapse_on_new_card": false,
+    "pinned": false,
+    "show_title": true,
+    "show_breadcrumbs": true,
+    "show_retention": true,
+    "show_recent_failures": true,
+    "show_source_badges": true,
+    "show_card_count": true,
+    "show_maturity_breakdown": true,
+    "show_health": true,
+    "show_recovery": true,
+    "shortcut_enabled": true,
+    "shortcut": "C",
+    "collapse_shortcut": "Escape"
+  },
+  "hud": {
+    "placement": "bottom_left",
+    "show_completed": true,
+    "show_estimated_total": true,
+    "show_elapsed": true,
+    "show_remaining_time": true,
+    "show_eta": false,
+    "show_cards_per_minute": false,
+    "show_session_target": false,
+    "show_progress_bar": false
+  },
+  "time_machine": {
+    "presets_minutes": [10, 20, 30, 45, 60],
+    "adaptive_timing": true,
+    "minimum_history": 20,
+    "end_behavior": "no_stop",
+    "fallback_seconds": {
+      "new": 20.0,
+      "learning": 12.0,
+      "review": 7.0,
+      "relearning": 10.0
+    },
+    "shortcut_enabled": true,
+    "shortcut": "Ctrl+Shift+T",
+    "automatically_start_hud": true,
+    "show_estimates_on_deck": true
+  },
+  "resume": {
+    "checkpoint_seconds": 30,
+    "stale_after_days": 7,
+    "show_on_launch": true,
+    "enable_checkpoints": true,
+    "detect_inactivity": true,
+    "inactivity_seconds": 1800,
+    "show_on_home": true,
+    "history_days": 90,
+    "maximum_sessions": 500
+  },
+  "return_ramp": {
+    "absence_days": 3,
+    "show_on_launch": true,
+    "suggestion_count": 3
+  },
+  "backtrack": {
+    "shortcut_enabled": true,
+    "shortcut": "Alt+B",
+    "history_limit": 50
+  },
+  "mind_notes": {
+    "shortcut_enabled": true,
+    "shortcut": "Alt+M",
+    "resurface": true,
+    "maximum_active_per_topic": 3
+  },
+  "debrief": {
+    "show_completion_card": true,
+    "include_normal_sessions": true,
+    "handoff_enabled": true
+  },
+  "recovery": {
+    "shortcut_enabled": true,
+    "shortcut": "Shift+C",
+    "default_level": "current",
+    "default_mode": "standard",
+    "include_new": false,
+    "include_current": true,
+    "recent_failure_days": 14,
+    "max_quick": 8,
+    "max_standard": 30,
+    "ask_before_create": true,
+    "deck_name_pattern": "Vellum Recovery - {topic}"
+  },
+  "home": {
+    "show_continue": true,
+    "show_time_machine": true,
+    "show_weak_topics": true,
+    "show_estimated_workload": true,
+    "show_greeting": true
+  },
+  "topic_parsing": {
+    "preferred_roots": ["#FirstAid", "#Pathoma", "#B&B", "#Sketchy", "#Systems"],
+    "ignored_roots": ["#AK_Other", "#AK_Original_Decks", "AnkiHub_Deleted"],
+    "ignored_segments": [],
+    "renamed_segments": {},
+    "source_badges": {
+      "#FirstAid": "First Aid",
+      "#Pathoma": "Pathoma",
+      "#B&B": "Boards & Beyond",
+      "#Sketchy": "Sketchy",
+      "#Systems": "Systems"
+    },
+    "maximum_depth": 8,
+    "anking_adapter": true,
+    "generic_fallback": true
+  }
+}
