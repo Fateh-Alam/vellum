@@ -1,0 +1,56 @@
+name: Request a feature
+description: Explain the study problem you want Vellum to solve.
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Start with the problem, not just the button you want. That makes it much easier to understand whether the idea fits Vellum without weakening Anki's scheduling or collection safety.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What study problem are you trying to solve?
+      placeholder: I often need to…
+    validations:
+      required: true
+  - type: textarea
+    id: current_workflow
+    attributes:
+      label: How do you handle it today?
+      description: Tell us what is slow, confusing, or repetitive.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would make it easier?
+      description: A rough description is enough. A sketch or redacted screenshot is welcome.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part of Vellum is closest?
+      options:
+        - Study Builder
+        - Recovery / Backtrack
+        - Time Machine / Return Ramp
+        - Review screen / HUD
+        - Mind Notes
+        - Session Debrief
+        - Settings / onboarding / help
+        - Something new
+  - type: textarea
+    id: scheduling
+    attributes:
+      label: Would this change cards, decks, tags, or scheduling?
+      description: If you are unsure, say so. Vellum keeps Anki and FSRS in charge of scheduling.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check
+      options:
+        - label: I removed private card content, Mind Notes, collection files, and personal paths from this request.
+          required: true
+

@@ -2,6 +2,14 @@
 
 All notable public changes to Vellum are recorded here.
 
+## Unreleased
+
+- Added a detailed public walkthrough with real interface captures, a plain-
+  language explanation of Study Builder, explicit collection-safety boundaries,
+  installation help, and responsive media that preserves its full aspect ratio.
+- Added guided public forms for bugs, collection-safety concerns, and feature
+  requests, plus separate general-feedback and private security-reporting links.
+
 ## 1.1.0 — 2026-08-25
 
 - Added an independently toggleable, full-window Study Builder with two guided

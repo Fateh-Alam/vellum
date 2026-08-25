@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f4efe5">
+  <meta name="description" content="Vellum is a local-first Anki Desktop add-on that helps medical students build focused study sessions from topics, tags, decks, and available time without replacing Anki or FSRS.">
+  <meta property="og:title" content="Vellum for Anki — Build a filtered deck without fighting the Browser">
+  <meta property="og:description" content="A visual, plain-language tour of Study Builder, Recovery, Time Machine, Resume, and Vellum's collection-safety model.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fateh-alam.github.io/vellum/">
+  <meta property="og:image" content="https://fateh-alam.github.io/vellum/assets/og-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Vellum for Anki — A focused study workflow for medical students</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Vellum for Anki",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Anki Desktop on macOS",
+    "softwareVersion": "1.1.0",
+    "description": "A local-first study-continuity add-on for Anki Desktop with a guided Study Builder, Recovery, Time Machine, Resume, Mind Notes, and Session Debrief.",
+    "downloadUrl": "https://ankiweb.net/shared/info/226947964",
+    "codeRepository": "https://github.com/Fateh-Alam/vellum"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the explanation</a>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="#top" aria-label="Vellum home">
+      <svg aria-hidden="true" viewBox="0 0 42 42"><path d="M10 6h22v6L23 34h-4L10 12V6Z"/><path d="M15 11h12L21 27 15 11Z" class="brand-cut"/></svg>
+      <span>Vellum</span>
+    </a>
+    <nav aria-label="Main navigation" data-nav>
+      <a href="#study-builder">Study Builder</a>
+      <a href="#safety">Safety</a>
+      <a href="#features">Everything it does</a>
+      <a href="#feedback">Feedback</a>
+      <a href="#faq">FAQ</a>
+      <a class="nav-install" href="#install">Install</a>
+    </nav>
+    <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" data-menu>
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><span class="status-dot"></span> Anki Desktop add-on · version 1.1.0</p>
+        <h1>Make the filtered deck you want without fighting the <em>Browser.</em></h1>
+        <p class="hero-lead">Say you want renal cards from First Aid and Pathoma, but only from AnKing. Vellum walks you through that in three screens, shows the cards it found, then lets Anki handle the studying.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="https://ankiweb.net/shared/info/226947964">Install from AnkiWeb <span aria-hidden="true">↗</span></a>
+          <a class="button secondary" href="#study-builder">See it work <span aria-hidden="true">↓</span></a>
+        </div>
+        <p class="install-code">AnkiWeb code <button type="button" data-copy="226947964" aria-label="Copy AnkiWeb code 226947964"><code>226947964</code><span>Copy</span></button></p>
+      </div>
+
+      <div class="hero-visual reveal" aria-label="A simplified Vellum Study Builder example">
+        <div class="window-chrome">
+          <div class="traffic" aria-hidden="true"><i></i><i></i><i></i></div>
+          <span>Vellum Study Builder</span>
+          <span class="native-badge">Native Anki window</span>
+        </div>
+        <div class="mini-builder">
+          <p class="mini-label">WHAT DO YOU WANT TO STUDY?</p>
+          <div class="mini-scope">
+            <span>Renal</span><b>or</b><span>Acid–Base</span>
+          </div>
+          <div class="mini-arrow">from</div>
+          <div class="mini-scope decks">
+            <span>AnKing</span><b>or</b><span>Medicine</span>
+          </div>
+          <div class="mini-result">
+            <div><strong>284</strong><small>matching</small></div>
+            <div><strong>176</strong><small>ready</small></div>
+            <div><strong>9</strong><small>suspended</small></div>
+          </div>
+          <button type="button" tabindex="-1">Build &amp; Study</button>
+          <p>Anki and FSRS still schedule every answer.</p>
+        </div>
+      </div>
+
+      <div class="trust-strip reveal" aria-label="Vellum's key boundaries">
+        <div><strong>Not AI</strong><span>No generated cards or answers</span></div>
+        <div><strong>Not a scheduler</strong><span>FSRS remains in control</span></div>
+        <div><strong>Not cloud software</strong><span>No account or telemetry</span></div>
+        <div><strong>Not a deck editor</strong><span>No bulk tag or card edits</span></div>
+      </div>
+    </section>
+
+    <section class="plain-language section" id="what-is-vellum">
+      <div class="section-heading reveal">
+        <p class="eyebrow">What it is</p>
+        <h2>Vellum is a set of study tools inside Anki Desktop.</h2>
+        <p>I built it because making a precise filtered deck from a large medical collection was taking too many Browser searches and too much tag-tree clicking. The cards were already there. Getting the right ones into a study session was the annoying part.</p>
+      </div>
+      <div class="explain-grid">
+        <article class="explain-card reveal">
+          <span class="number">01</span>
+          <h3>It uses your existing cards.</h3>
+          <p>Your AnKing deck, school deck, or personal cards stay where they are. Vellum does not come with medical content and does not rewrite your notes.</p>
+        </article>
+        <article class="explain-card reveal">
+          <span class="number">02</span>
+          <h3>You pick what you want.</h3>
+          <p>Start with topics and then choose their source decks, or start with decks and look through the tags found inside them.</p>
+        </article>
+        <article class="explain-card reveal">
+          <span class="number">03</span>
+          <h3>Vellum does the search.</h3>
+          <p>Your choices become an Anki search. Vellum shows the result first, then creates a temporary native filtered deck if you press Build &amp; Study.</p>
+        </article>
+        <article class="explain-card reveal">
+          <span class="number">04</span>
+          <h3>Then it gets out of the way.</h3>
+          <p>You answer with Again, Hard, Good, and Easy as usual. FSRS, due dates, review history, and syncing are still handled by Anki.</p>
+        </article>
+      </div>
+      <div class="one-line-model reveal">
+        <span>Your existing collection</span><i>→</i><span>A scope you understand</span><i>→</i><span>A temporary filtered deck</span><i>→</i><span>Normal Anki review</span><i>→</i><span>Cards return home</span>
+      </div>
+    </section>
+
+    <section class="builder-section section" id="study-builder">
+      <div class="section-heading narrow reveal">
+        <p class="eyebrow">Study Builder</p>
+        <h2>There are two ways to build a deck.</h2>
+        <p>Use the first when you know the topic. Use the second when you know the deck. You do not have to type a query such as <code>(tag:A or tag:B) deck:C</code>.</p>
+      </div>
+
+      <div class="route-cards reveal">
+        <button class="route-card active" type="button" data-route="find" aria-pressed="true">
+          <span class="route-icon">T</span>
+          <span><strong>Route 1: Find Topics</strong><small>“I know what subject I want.”</small></span>
+        </button>
+        <button class="route-card" type="button" data-route="browse" aria-pressed="false">
+          <span class="route-icon">D</span>
+          <span><strong>Route 2: Browse Collection</strong><small>“I know which deck I want to use.”</small></span>
+        </button>
+      </div>
+
+      <div class="demo-shell reveal">
+        <div class="demo-copy">
+          <p class="demo-kicker" data-demo-kicker>ROUTE 1 · START WITH THE MEDICAL TOPIC</p>
+          <h3 data-demo-title>Choose one or several topics</h3>
+          <p data-demo-description>Search “renal,” then check First Aid › Renal and Systems › Renal. Several topics here mean “any of these topics,” not the impossible requirement that every card has every selected tag.</p>
+          <ol class="demo-steps" data-demo-steps aria-label="Find Topics walkthrough">
+            <li><button type="button" data-step="0" class="active"><span>1</span>Choose topics</button></li>
+            <li><button type="button" data-step="1"><span>2</span>Choose source decks</button></li>
+            <li><button type="button" data-step="2"><span>3</span>Inspect the exact matches</button></li>
+          </ol>
+          <div class="demo-example" data-demo-example><strong>Example:</strong> Renal <em>or</em> Acid–Base, from AnKing <em>or</em> Medicine.</div>
+        </div>
+        <figure class="demo-screen">
+          <div class="screen-label"><span>Real native Qt capture</span><a href="assets/screenshots/study-builder-find-topics.png" target="_blank" rel="noopener" data-fullscreen aria-label="Open this screenshot larger">Expand ↗</a></div>
+          <img src="assets/screenshots/study-builder-find-topics.png" alt="Vellum Find Topics screen showing Renal topic results" width="796" height="796" data-demo-image>
+          <figcaption data-demo-caption>Typing filters a local topic index. It does not run a collection-wide search on every keystroke.</figcaption>
+        </figure>
+      </div>
+
+      <div class="logic-card reveal">
+        <div>
+          <p class="eyebrow">How the selections combine</p>
+          <h3>Topics are alternatives. Decks tell Vellum where to look.</h3>
+        </div>
+        <div class="logic-equation" aria-label="Renal or Cardiology, and AnKing or Medicine">
+          <span>( Renal <b>OR</b> Cardiology )</span>
+          <strong>AND</strong>
+          <span>( AnKing <b>OR</b> Medicine )</span>
+        </div>
+        <p>This means: find cards about Renal or Cardiology, but only if their home deck is AnKing or Medicine. A parent deck or tag includes its children. If you choose a specific child, Vellum removes the now-redundant parent selection.</p>
+      </div>
+    </section>
+
+    <section class="inspection section" id="inspection">
+      <div class="inspection-copy reveal">
+        <p class="eyebrow">The preview</p>
+        <h2>Vellum shows the result before it builds anything.</h2>
+        <p>The preview does not edit cards. It shows which cards can enter the session and which ones Anki will leave out.</p>
+        <dl class="count-definitions">
+          <div><dt>Ready</dt><dd>Can enter the filtered deck now.</dd></div>
+          <div><dt>Suspended</dt><dd>Stay excluded unless you explicitly choose to unsuspend selected cards.</dd></div>
+          <div><dt>Buried</dt><dd>Shown in the count, but not pulled into the deck.</dd></div>
+          <div><dt>In another filtered deck</dt><dd>Remain owned by that deck and are not stolen.</dd></div>
+        </dl>
+      </div>
+      <div class="availability-card reveal">
+        <p>Your example scope</p>
+        <div class="availability-total"><strong>284</strong><span>cards match</span></div>
+        <div class="availability-bars" aria-label="176 ready, 92 suspended, 9 buried, 7 elsewhere">
+          <i style="--size: 62%; --tone: var(--safe)"><span>176 ready</span></i>
+          <i style="--size: 32%; --tone: var(--warning)"><span>92 suspended</span></i>
+          <i style="--size: 3%; --tone: var(--muted)"><span>9 buried</span></i>
+          <i style="--size: 3%; --tone: var(--danger)"><span>7 elsewhere</span></i>
+        </div>
+        <p class="availability-note">The numbers above are an explanatory example. Vellum calculates the real numbers from your local collection when you choose a complete scope.</p>
+      </div>
+    </section>
+
+    <section class="safety-section section" id="safety">
+      <div class="safety-hero reveal">
+        <div>
+          <p class="eyebrow">Collection safety</p>
+          <h2>What does Vellum actually change?</h2>
+        </div>
+        <p class="answer">It does not need to delete cards, rewrite note fields, edit tags, or replace scheduling. It does create temporary filtered decks, and it can unsuspend selected cards if you explicitly ask it to. It is still software, so keep Anki's automatic backups enabled and export important collections occasionally.</p>
+      </div>
+
+      <div class="safety-columns">
+        <article class="safe-card reveal">
+          <h3><span aria-hidden="true">✓</span> What Vellum does</h3>
+          <ul>
+            <li>Reads deck, tag, note-type, card-state, and scheduling indexes.</li>
+            <li>Creates a uniquely named temporary <strong>native Anki filtered deck</strong>.</li>
+            <li>Uses rescheduling mode, so answers behave like scheduled study.</li>
+            <li>Records a manifest of the exact deck and cards it created.</li>
+            <li>Stores Vellum history in a separate local SQLite database under <code>user_files</code>.</li>
+            <li>Returns remaining cards home and removes only the identity-checked Vellum deck when you finish.</li>
+          </ul>
+        </article>
+        <article class="never-card reveal">
+          <h3><span aria-hidden="true">×</span> What Vellum does not do</h3>
+          <ul>
+            <li>Does not delete your notes or cards.</li>
+            <li>Does not rewrite card fronts, backs, fields, or media.</li>
+            <li>Does not rename, merge, add, or remove your tags.</li>
+            <li>Does not modify Anki’s collection database schema.</li>
+            <li>Does not replace FSRS, choose answer ratings, or invent due dates.</li>
+            <li>Does not upload your collection, card text, tags, or study history.</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="mutation-boundary reveal">
+        <div class="mutation-heading">
+          <p class="eyebrow">The optional permanent action</p>
+          <h3>Unsuspending selected cards</h3>
+        </div>
+        <p>Suspended cards remain visually separate and excluded by default. If you deliberately enable <strong>Unsuspend and include</strong>, Vellum shows the exact number, asks for confirmation, and unsuspends only the limited cards selected for that run. Those cards stay active afterward.</p>
+        <p>If deck creation fails before study begins, Vellum removes only the exact newly created deck and re-suspends exactly the cards it activated during that attempt.</p>
+      </div>
+
+      <div class="failure-path reveal">
+        <p class="eyebrow">If a build fails</p>
+        <div class="failure-flow">
+          <span>Re-check the scope</span><i>→</i><span>Confirm activation</span><i>→</i><span>Create exact deck</span><i>→</i><span class="failure">Build fails</span><i>→</i><span>Remove that deck</span><i>→</i><span>Re-suspend newly activated cards</span>
+        </div>
+        <p>Vellum also refuses to remove a deck if its saved identity no longer matches. An interrupted non-empty session stays resumable rather than being silently destroyed.</p>
+      </div>
+    </section>
+
+    <section class="features-section section" id="features">
+      <div class="section-heading narrow reveal">
+        <p class="eyebrow">Other tools included</p>
+        <h2>Study Builder is the main feature. The rest helps between sessions.</h2>
+        <p>Each tool is optional and can be turned off on its own.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature reveal" data-feature="context"><span>01</span><h3>Context</h3><p>Shows the topic path for the card you are reviewing. Useful when a fact makes more sense once you know which system or chapter it came from.</p></article>
+        <article class="feature reveal" data-feature="recovery"><span>02</span><h3>Recovery</h3><p>Builds a short session for a topic that went badly. You can choose Quick, Standard, Full, or a custom size.</p></article>
+        <article class="feature reveal" data-feature="time"><span>03</span><h3>Time Machine</h3><p>Tell Vellum how many minutes you have and which deck groups are allowed. It estimates a queue from your local answer times.</p></article>
+        <article class="feature reveal" data-feature="resume"><span>04</span><h3>Resume + Return Ramp</h3><p>Resume an interrupted Vellum deck, or pick a smaller first session after several days away.</p></article>
+        <article class="feature reveal" data-feature="notes"><span>05</span><h3>Mind Notes</h3><p>Write a private thought for your future self—such as “compare distal vs proximal RTA”—and see it when the topic returns.</p></article>
+        <article class="feature reveal" data-feature="debrief"><span>06</span><h3>Session Debrief</h3><p>Shows how many cards you did, active time, answer ratings, and the topics where Again and Hard answers clustered. It is a session report, not a mastery score.</p></article>
+      </div>
+
+      <div class="gallery reveal" aria-label="Other Vellum features">
+        <figure><img src="assets/screenshots/return-ramp.png" alt="Vellum Return Ramp showing bounded sessions after 17 days away" width="620" height="487" loading="lazy"><figcaption><strong>Return Ramp</strong><span>Start smaller than the backlog.</span></figcaption></figure>
+        <figure><img src="assets/screenshots/mind-note.png" alt="Vellum Mind Note editor for Porphyria" width="590" height="340" loading="lazy"><figcaption><strong>Mind Notes</strong><span>Leave a thought for the next encounter.</span></figcaption></figure>
+        <figure><img src="assets/screenshots/debrief.png" alt="Vellum Session Debrief showing review counts and renal topic errors" width="760" height="650" loading="lazy"><figcaption><strong>Session Debrief</strong><span>Understand what happened without a fake mastery score.</span></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="anking-section section" id="anking">
+      <div class="anking-copy reveal">
+        <p class="eyebrow">AnKing V12</p>
+        <h2>Tags answer “what is this card about?” Decks answer “where should it come from?”</h2>
+        <p>AnKing uses hierarchical tags because one card can belong to several topics and resources while living in only one deck. Vellum makes that structure browseable without asking you to memorize tag paths.</p>
+        <ul>
+          <li>Understands parent and descendant tag paths.</li>
+          <li>Detects locally present systems, resources, yield, and Step containers instead of assuming one frozen tag snapshot.</li>
+          <li>Collapses only deterministic duplicate Step copies and preserves their exact backing tags.</li>
+          <li>Hides maintenance/update/duplicate tags in the ordinary view while keeping an All tags route.</li>
+          <li>Also works with flat tags, generic hierarchical tags, ordinary decks, and custom note types.</li>
+        </ul>
+      </div>
+      <div class="tag-tree reveal" aria-label="Example AnKing tag hierarchy">
+        <p>What you see</p>
+        <div><span>Resources</span><small>scope</small></div>
+        <div class="depth-1"><span>First Aid</span><small>resource</small></div>
+        <div class="depth-2 selected"><span>Renal</span><small>284 cards</small></div>
+        <div class="depth-1"><span>Pathoma</span><small>resource</small></div>
+        <div class="depth-2"><span>Kidney</span><small>118 cards</small></div>
+        <p class="raw-path">What Vellum safely keeps underneath<br><code>#AK_Step1_v12::#FirstAid::14_Renal</code></p>
+      </div>
+    </section>
+
+    <section class="privacy-section section" id="privacy">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Privacy</p>
+        <h2>Vellum does not send your collection anywhere.</h2>
+      </div>
+      <div class="privacy-grid">
+        <div class="privacy-diagram reveal">
+          <div class="anki-box"><strong>Your Anki collection</strong><span>cards · notes · media · scheduling</span></div>
+          <div class="local-line"><span>local reads</span><span>supported Anki operations</span></div>
+          <div class="vellum-box"><strong>Vellum <code>user_files</code></strong><span>settings · session IDs · timing · recipes · text you deliberately write</span></div>
+          <div class="cloud-box"><strong>The internet</strong><span>no connection from Vellum</span></div>
+        </div>
+        <div class="privacy-copy reveal">
+          <h3>Never stored by Vellum</h3>
+          <p>Card questions, answers, note fields, rendered snippets, and media.</p>
+          <h3>Stored locally when needed</h3>
+          <p>Identifiers, timings, ratings, topic metadata, exact temporary-deck manifests, recipe selectors, and text you deliberately write in Mind Notes or handoffs.</p>
+          <h3>Sent to the author</h3>
+          <p><strong>Nothing.</strong> There is no account, telemetry, analytics SDK, cloud backend, API key, or remote crash reporter.</p>
+          <a class="text-link" href="https://github.com/Fateh-Alam/vellum/blob/main/docs/PRIVACY.md">Read the complete data guide →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="evidence-section section" id="evidence">
+      <div class="section-heading narrow reveal">
+        <p class="eyebrow">Testing</p>
+        <h2>What I tested before publishing v1.1.0.</h2>
+      </div>
+      <div class="evidence-grid">
+        <article class="reveal"><strong>162</strong><span>unit tests in the v1.1.0 qualification run</span></article>
+        <article class="reveal"><strong>50,000</strong><span>tag performance fixture for local-index search</span></article>
+        <article class="reveal"><strong>2</strong><span>qualified macOS Anki lines: 25.9.4 and 26.5</span></article>
+        <article class="reveal"><strong>0</strong><span>telemetry, cloud services, or copied card-text fields</span></article>
+      </div>
+      <div class="qualification reveal">
+        <div class="qualified"><span>✓</span><p><strong>Locally qualified</strong>Unit, compilation, JavaScript, package integrity, Qt visual, disposable Anki-core, and isolated desktop startup checks on macOS.</p></div>
+        <div class="pending"><span>!</span><p><strong>Not claimed</strong>A completed real Windows 11 or Linux qualification matrix; coexistence with every third-party add-on; a guarantee that software can never contain a bug.</p></div>
+      </div>
+      <p class="evidence-links reveal"><a href="https://github.com/Fateh-Alam/vellum/actions">See CI runs</a><a href="https://github.com/Fateh-Alam/vellum/tree/main/tests">Read the tests</a><a href="https://github.com/Fateh-Alam/vellum/blob/main/docs/DEVELOPMENT.md">Read the qualification boundary</a><a href="https://github.com/Fateh-Alam/vellum/security">Security policy</a></p>
+    </section>
+
+    <section class="install-section section" id="install">
+      <div class="install-panel reveal">
+        <div>
+          <p class="eyebrow">Install</p>
+          <h2>Install it from AnkiWeb.</h2>
+          <p>Vellum 1.1.0 targets Anki Desktop 25.09.4 or newer. The current public qualification evidence is macOS-specific.</p>
+        </div>
+        <ol>
+          <li><span>1</span><p>In Anki Desktop, open <strong>Tools → Add-ons → Get Add-ons…</strong></p></li>
+          <li><span>2</span><p>Paste <button type="button" data-copy="226947964"><code>226947964</code><small>copy</small></button> and install.</p></li>
+          <li><span>3</span><p>Restart Anki. Read the five-step Getting Started guide; every module is optional.</p></li>
+          <li><span>4</span><p>Open <strong>Builder</strong> in Anki’s top bar, choose one route, inspect the cards, then Build &amp; Study.</p></li>
+        </ol>
+        <div class="install-actions">
+          <a class="button primary" href="https://ankiweb.net/shared/info/226947964">Open AnkiWeb</a>
+          <a class="button secondary" href="https://github.com/Fateh-Alam/vellum/releases/latest">Download from GitHub</a>
+        </div>
+        <p class="update-note"><strong>Updates:</strong> AnkiWeb installs are offered updates through Anki’s add-on update check. A manually installed GitHub file is not attached to the AnkiWeb listing and must be updated manually.</p>
+      </div>
+    </section>
+
+    <section class="feedback-section section" id="feedback">
+      <div class="section-heading narrow reveal">
+        <p class="eyebrow">Feedback</p>
+        <h2>Found a problem? Think a feature is missing? Say so.</h2>
+        <p>Useful criticism is welcome. Please describe what you tried, what you expected, and what actually happened. Do not attach your collection, card text, Mind Notes, or private profile data.</p>
+      </div>
+      <div class="feedback-grid">
+        <a class="feedback-card reveal" href="https://github.com/Fateh-Alam/vellum/issues/new?template=bug_report.yml">
+          <span>Bug report</span>
+          <h3>Something behaved incorrectly</h3>
+          <p>Report a reproducible bug, confusing behavior, or performance problem.</p>
+          <strong>Open a report →</strong>
+        </a>
+        <a class="feedback-card reveal" href="https://github.com/Fateh-Alam/vellum/issues/new?template=collection_safety.yml">
+          <span>Collection safety</span>
+          <h3>Something may have changed unexpectedly</h3>
+          <p>Raise a concern about cards being moved, activated, restored, or cleaned up—even if you are asking before using the feature.</p>
+          <strong>Raise a concern →</strong>
+        </a>
+        <a class="feedback-card reveal" href="https://github.com/Fateh-Alam/vellum/issues/new?template=feature_request.yml">
+          <span>Feature request</span>
+          <h3>There is a workflow Vellum should support</h3>
+          <p>Explain the real study problem first. A proposed interface is helpful, but not required.</p>
+          <strong>Request a feature →</strong>
+        </a>
+        <a class="feedback-card reveal" href="https://github.com/Fateh-Alam/vellum/discussions">
+          <span>General feedback</span>
+          <h3>You want to discuss the idea openly</h3>
+          <p>Share what is useful, what is confusing, what you do not trust yet, or how you use AnKing and filtered decks.</p>
+          <strong>Join the discussion →</strong>
+        </a>
+      </div>
+      <p class="private-report reveal"><strong>Contains private card data or a security/privacy vulnerability?</strong> Do not post it publicly. Use <a href="https://github.com/Fateh-Alam/vellum/security/advisories/new">GitHub's private vulnerability report</a>.</p>
+    </section>
+
+    <section class="faq-section section" id="faq">
+      <div class="section-heading reveal"><p class="eyebrow">FAQ</p><h2>Things worth checking before you install it</h2></div>
+      <div class="faq-list reveal">
+        <details><summary>Does Vellum change my FSRS settings or replace the scheduler?</summary><p>No. Vellum builds scheduled, rescheduling-enabled filtered decks through Anki’s supported flow. Your Again/Hard/Good/Easy answer is still processed by Anki and FSRS. Vellum does not calculate replacement intervals or rewrite your scheduler configuration.</p></details>
+        <details><summary>Does “temporary filtered deck” mean my cards are duplicated?</summary><p>No. Anki temporarily assigns eligible cards to the filtered deck and keeps their original deck identity. When the deck is emptied or safely finished, they return home. Vellum records exact ownership so it does not delete a similarly named deck that it does not own.</p></details>
+        <details><summary>Can Vellum unsuspend cards?</summary><p>Only when you explicitly enable Unsuspend and include and confirm the exact number. It unsuspends only the limited selected IDs. Those cards stay unsuspended after the session. If the build fails before study starts, Vellum re-suspends exactly the cards activated by that attempt.</p></details>
+        <details><summary>What happens to buried cards or cards already in another filtered deck?</summary><p>They appear in separate availability counts and do not enter the new filtered deck. Vellum does not steal cards from another filtered deck or silently unbury them.</p></details>
+        <details><summary>Is this only for AnKing V12?</summary><p>No. AnKing is the most tag-heavy use case, so it receives specialized local facet detection. Vellum also supports ordinary decks and subdecks, generic hierarchical tags, flat tags, Basic, Cloze, Image Occlusion, and custom note/card types.</p></details>
+        <details><summary>Does it sync to AnkiMobile or AnkiDroid?</summary><p>Vellum’s interface and local continuity database are desktop-only. Card reviews and scheduling changes made through normal Anki study remain part of your Anki collection and follow Anki’s normal sync behavior. Vellum recipes, Mind Notes, and session history do not use a Vellum cloud and are not mobile features.</p></details>
+        <details><summary>Does it read or upload my card text?</summary><p>Preview snippets are rendered ephemerally for inspection and are not stored in Vellum’s database, logs, diagnostics, recipes, or debriefs. Vellum makes no external data requests and has nowhere to upload your collection.</p></details>
+        <details><summary>What if I uninstall it?</summary><p>Anki’s normal add-on removal removes the add-on code. Vellum-owned local data lives in its add-on area. Before uninstalling, finish or abandon any active Vellum-generated session from inside Vellum so Anki can return remaining cards home using the recorded manifest.</p></details>
+        <details><summary>Should I still keep backups?</summary><p>Yes. Always. Anki creates automatic backups, and important collections deserve an occasional manual export too. “Designed with rollback and ownership checks” is a safety architecture, not permission to stop backing up your work.</p></details>
+        <details><summary>Why not just use Anki’s Browser?</summary><p>You can—and Vellum includes an Open in Browser handoff. The difference is workflow: the Browser is a powerful card-management tool, while Study Builder guides a narrower task: choose a meaningful scope, inspect availability, and start scheduled study without constructing search syntax.</p></details>
+      </div>
+    </section>
+
+    <section class="final-cta section">
+      <div class="reveal">
+        <p class="eyebrow">Try it or inspect the code</p>
+        <h2>Vellum helps you pick the cards. Anki still handles the studying.</h2>
+        <div class="hero-actions">
+          <a class="button primary" href="https://ankiweb.net/shared/info/226947964">Install Vellum</a>
+          <a class="button secondary" href="https://github.com/Fateh-Alam/vellum">Inspect the source</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand" href="#top"><svg aria-hidden="true" viewBox="0 0 42 42"><path d="M10 6h22v6L23 34h-4L10 12V6Z"/><path d="M15 11h12L21 27 15 11Z" class="brand-cut"/></svg><span>Vellum</span></a>
+    <p>Local-first continuity for Anki Desktop. Not affiliated with Anki, AnkiHub, or AnKing.</p>
+    <nav aria-label="Footer navigation"><a href="https://github.com/Fateh-Alam/vellum">GitHub</a><a href="https://ankiweb.net/shared/info/226947964">AnkiWeb</a><a href="https://github.com/Fateh-Alam/vellum/issues/new/choose">Feedback</a><a href="https://github.com/Fateh-Alam/vellum/blob/main/docs/PRIVACY.md">Privacy</a></nav>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite" data-toast>Copied AnkiWeb code</div>
+  <script src="app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+name: Raise a collection-safety concern
+description: Report anything that may have moved, activated, or changed cards unexpectedly.
+title: "[Safety]: "
+labels: ["collection-safety", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Collection-safety reports are taken seriously. Stop using the affected Vellum session until the behavior is understood. Do not upload your collection or private card content here. For a security or privacy vulnerability, use GitHub's private security-reporting link instead.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Is this something you observed or a concern about what might happen?
+      options:
+        - I observed unexpected behavior
+        - I am raising a concern before using the feature
+    validations:
+      required: true
+  - type: textarea
+    id: concern
+    attributes:
+      label: What changed or worried you?
+      description: Describe card/deck state without pasting card contents.
+    validations:
+      required: true
+  - type: textarea
+    id: sequence
+    attributes:
+      label: What happened immediately before and after?
+      placeholder: I opened…, selected…, clicked…, and then noticed…
+  - type: input
+    id: versions
+    attributes:
+      label: Anki, Vellum, and operating-system versions
+      placeholder: Anki 26.5, Vellum 1.1.0, macOS 15.x
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check
+      options:
+        - label: I checked this report and removed card content, Mind Notes, collection files, and private paths.
+          required: true
+

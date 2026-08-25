@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: General feedback and questions
+    url: https://github.com/Fateh-Alam/vellum/discussions
+    about: Share an impression, ask a question, or discuss an idea without filing a bug.
+  - name: Report a security or privacy vulnerability privately
+    url: https://github.com/Fateh-Alam/vellum/security/advisories/new
+    about: Use this when public disclosure could put users or their data at risk.
