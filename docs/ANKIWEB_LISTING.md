@@ -2,13 +2,13 @@
 
 Public listing: https://ankiweb.net/shared/info/226947964
 
-Visual walkthrough: https://fateh-alam.github.io/vellum/
+Website with screenshots: https://fateh-alam.github.io/vellum/
 
 Download code: **226947964**
 
 ## Title
 
-Vellum - Guided Study Builder, Recovery, and Session Continuity
+Vellum - Study Builder, Recovery, Time Machine, and Session Tools
 
 ## Tags
 
@@ -20,290 +20,439 @@ https://github.com/Fateh-Alam/vellum/issues/new/choose
 
 ## Description
 
-**Short version:** Vellum helps you find a specific set of cards, check the
-result, and put them into a scheduled filtered deck. Anki and FSRS still handle
-the actual studying.
+Vellum is an Anki Desktop add-on I made because building a useful filtered deck
+from a large medical collection had become a chore.
 
-**See the real interface and complete visual walkthrough:**
+The main feature is **Study Builder**. It lets you choose topics and then choose
+which decks those cards should come from. You can also do the reverse: choose a
+deck first, then browse only the tags that are actually used inside that deck.
+
+Vellum also adds tools for recovering a weak topic, planning a study session by
+time, resuming interrupted work, leaving private notes for yourself, and seeing
+what happened after a session.
+
+It does not contain medical cards. It does not write answers for you. It does not
+replace Anki or FSRS.
+
+Screenshots and a visual walkthrough:
 https://fateh-alam.github.io/vellum/
 
 ---
 
-## Why I built it
+## Study Builder
 
-I was spending too much time in Anki's Browser combining resource tags, systems,
-parent decks, and subdecks. The cards were already there; getting the exact set I
-wanted was the annoying part.
+Here is the sort of request Study Builder is meant to handle:
 
-Here is the basic use case. You want to study:
+> Give me Renal or Acid-Base cards from AnKing or my Medicine deck.
 
-> Renal from First Aid and Pathoma, but only from my AnKing deck.
+You could make that search manually in Anki's Browser. Vellum gives you a guided
+way to make the same choice without remembering search syntax or digging through
+the entire tag tree.
 
-Anki can already find those cards, but you usually need to open the Browser,
-navigate a very large tag tree, remember which tags are parents, combine several
-search terms correctly, inspect card states, and then configure a filtered deck.
+Open it from **Builder** in Anki's top bar, from the Vellum menu, from the Home
+screen, or from a deck's Overview screen.
 
-Vellum turns that into:
+### Find Topics
 
-> choose topics → choose source decks → inspect cards → Build & Study
+Use this route when you already know the subject you want to study.
 
-Vellum handles that setup. It does not provide medical content, generate cards,
-or create a second scheduler.
-
----
-
-## The Study Builder has two routes
-
-### Route 1: Find Topics
-
-Use this when you know **what subject you want to study**.
-
-1. Search only topic and tag names, such as `renal`, `cardiology`, `Pathoma`, or
+1. Search for a topic or tag path, such as `renal`, `cardiology`, `Pathoma`, or
    `high yield`.
-2. Select one or several topics. Several topics are alternatives. Selecting
-   Renal and Acid–Base means **Renal OR Acid–Base**.
-3. Vellum shows only the parent decks and subdecks that actually contain matching
-   cards.
-4. Select one or several source decks. Several source decks are alternatives.
-   Selecting AnKing and Medicine means **AnKing OR Medicine**.
-5. Vellum combines the two parts:
+2. Pick one or several topics. If you select Renal and Acid-Base, a card may
+   match either one. It does not need both tags.
+3. Vellum checks which decks actually contain matching cards.
+4. Pick the parent decks or exact subdecks you want to use as sources.
+5. Inspect the matching cards and availability counts.
+6. Choose a card limit and press **Build & Study**.
 
-   `(Renal OR Acid–Base) AND (AnKing OR Medicine)`
+So choosing Renal and Acid-Base from AnKing and Medicine means:
 
-6. Inspect exact availability and a small card preview.
-7. Choose a card limit and select **Build & Study**.
+`(Renal OR Acid-Base) AND (AnKing OR Medicine)`
 
-You never need to type the Anki query shown above. It is only written here to
-make the behavior unambiguous.
+You do not type that query. It is shown here only to explain exactly what Vellum
+does with your selections.
 
-### Route 2: Browse Collection
+### Browse Collection
 
-Use this when you know **which deck should supply the cards**.
+Use this route when you know which deck you want to study from, but you do not
+want to search the collection's full tag list.
 
-1. Select a parent deck or exact subdeck from a deck tree.
-2. Checking a parent includes its descendant subdecks. The disclosure arrow only
-   opens the parent so you can inspect children; it does not select the parent.
-3. Vellum calculates only the hierarchical tags actually used by cards inside
-   that selected deck scope.
-4. Browse those tags as a tree—for example Resources → First Aid → Renal.
-5. Checking a parent tag includes its descendants. Selecting a more specific
-   child removes a redundant selected ancestor.
-6. Inspect exact card availability, set a limit, and build.
+1. Pick a parent deck or an exact subdeck from the deck tree.
+2. Vellum checks which tags are actually used by cards in that deck scope.
+3. Browse those tags as a normal hierarchy, such as
+   `Resources > First Aid > Renal`.
+4. Pick one or several tags.
+5. Inspect the cards, set the limit, and press **Build & Study**.
 
-There is also an explicit **Study entire selected deck scope** action when you do
-not want an additional tag filter.
+Checking a parent deck includes its subdecks. Opening the arrow beside it only
+shows the children; it does not select anything. The tag tree works the same way.
+If you choose a specific child, Vellum removes a redundant selected parent so the
+scope remains easy to understand.
 
----
+If you want the whole selected deck scope with no tag filter, use **Study entire
+selected deck scope**. Vellum still applies your card-state choice and limit.
 
-## What do the availability counts mean?
+### Search speed
 
-Before building, Vellum separates the result into:
+Typing in the topic search does not run a fresh collection-wide Anki query for
+every letter. Vellum searches a local tag/topic index and performs collection
+work only after the selection changes. Old background results are ignored if you
+make another choice before they finish.
 
-- **Ready:** cards that can enter this filtered deck now.
-- **Suspended:** matching cards that remain excluded unless you deliberately
-  enable and confirm unsuspension.
-- **Buried:** visible in the count but not pulled into the filtered deck.
-- **In another filtered deck:** visible in the count but left with that existing
-  filtered deck.
+### What the preview tells you
 
-The preview is inspect-only. Vellum does not use the preview as a card editor.
+The final preview separates matching cards into four useful groups:
+
+- **Ready:** can enter the new filtered deck now.
+- **Suspended:** match the scope, but remain excluded unless you explicitly
+  choose to unsuspend them.
+- **Buried:** counted, but not placed in the filtered deck.
+- **In another filtered deck:** counted, but left in that existing filtered
+  deck.
+
+The card preview is for checking the result. It is not another version of Anki's
+Browser and it does not offer bulk card editing.
+
+### Choosing the cards
 
 You can choose:
 
-- Due + New, Due, New, or All cards;
-- a required numeric limit, default 100;
+- **Due + New**, **Due**, **New**, or **All** cards;
+- a required card limit, which defaults to 100;
 - due first, relative overdueness, most lapses, oldest seen, added order, or
-  random;
-- optional one-card-per-note sibling avoidance;
-- an optional new-card share for Due + New sessions;
-- optional, separately confirmed inclusion of suspended cards.
+  random order;
+- **Avoid sibling cards**, which takes at most one card from each note;
+- a preferred new-card percentage for Due + New sessions;
+- whether suspended cards should be unsuspended and included.
 
-Vellum re-evaluates the complete definition immediately before building. A stale
-preview cannot silently choose a different manifest.
+If one side of a due/new percentage is too small, Vellum fills the remaining
+places from the other side instead of returning a half-empty deck. Sibling
+avoidance is applied before the final card list is accepted.
+
+Vellum checks the search, counts, ordering, limit, sibling rule, due/new split,
+and suspension state again immediately before it builds the deck. It does not
+blindly reuse an old preview.
+
+### Saved study decks
+
+You can save a setup as a named recipe. The recipe stores the topics, decks, and
+options you selected. It does not keep cards permanently trapped inside a
+filtered deck.
+
+Every time you run a recipe, Vellum searches the collection again. Newly added,
+deleted, moved, retagged, suspended, or unsuspended cards can therefore change
+the result. If a saved deck or tag no longer exists, Vellum shows it as missing
+instead of deleting the rule and accidentally broadening the search.
+
+### AnKing V12 support
+
+AnKing gets particular attention because it relies heavily on hierarchical tags.
+Vellum reads the tag structure installed in your own collection. It does not
+assume that every user has one frozen copy of the V12 hierarchy.
+
+When those paths exist, Vellum can recognize Step containers, systems, subjects,
+First Aid, B&B, Pathoma, Sketchy, Bootcamp, Pixorize, yield tags, Step overlap,
+and resource chapter/video paths. Equivalent Step copies can appear as one
+readable choice while Vellum keeps all of the exact backing tags needed for the
+real Anki search.
+
+Maintenance, update, and duplicate tags are hidden from the normal topic list so
+they do not crowd the useful results. They remain available in **All tags**.
+
+Study Builder is not limited to AnKing. It also works with normal decks and
+subdecks, flat tags, hierarchical tags, decks without tags, Basic cards, Cloze
+cards, Image Occlusion cards, and custom note types.
 
 ---
 
-## Will this destroy or rewrite my cards?
+## Context sidebar
 
-Vellum is designed with a narrow collection-mutation boundary, exact temporary
-deck ownership checks, and rollback. No software can truthfully promise that it
-can never contain a bug, so you should still keep Anki's normal automatic
-backups and occasional manual exports.
+Context is an optional panel beside the card you are reviewing. It reads the
+card's hierarchical tags and shows where the card sits, for example:
 
-### What Vellum does
+`First Aid > Renal > Glomerular disease`
 
-- Reads Anki's local deck, tag, note-type, card-state, and scheduling indexes.
-- Creates a uniquely named temporary **native Anki filtered deck**.
-- Uses rescheduling mode so your answers behave like normal scheduled study.
-- Records an exact manifest of the Vellum-generated deck and the cards Anki
-  actually placed inside it.
-- Returns remaining cards home and removes only the exact Vellum-owned deck when
-  the session is safely finished.
-- Stores Vellum-owned settings and continuity data in a separate local SQLite
-  database under the add-on's Anki-preserved `user_files` directory.
+This is useful when a card makes little sense in isolation and you need to see
+the surrounding subject. Depending on your settings, the panel can also show
+local counts, maturity, retention/failure information, source labels, a Mind
+Note, and a button to start Recovery for that topic.
+
+Context does not use the question or answer text to guess a topic. Topic parsing
+comes from decks, tags, and your configured parsing rules.
+
+---
+
+## Topic Recovery
+
+Recovery starts from the current card. You choose which level of its topic path
+needs work, then choose how broad the repair session should be:
+
+- **Quick:** the weakest cards with the smallest intervention.
+- **Standard:** weak cards plus useful starting cards.
+- **Full:** a wider review of the topic.
+- **Custom:** choose the inclusion rules yourself.
+
+Vellum shows the proposed cards before it builds anything. If you continue, it
+uses Anki's filtered-deck system and normal scheduling. Recovery is for the
+moment when one failed card tells you the gap is larger than that one fact.
+
+---
+
+## Time Machine
+
+Time Machine is for days when the real limit is time.
+
+Choose how many minutes you have and which deck groups are allowed. Vellum uses
+answer-time history stored on your computer to estimate how many cards fit. If
+there is not enough personal timing history yet, it uses conservative fallback
+times instead of pretending it knows your pace.
+
+The estimate is a planning aid, not a promise that every card will take the same
+number of seconds. The resulting session is still an ordinary scheduled Anki
+filtered deck.
+
+---
+
+## Session HUD
+
+The HUD appears while you study a Vellum session. It can show completed and
+remaining cards, active and elapsed time, recent pace, the session target, and an
+estimated time remaining.
+
+It is only a display. It does not decide which answer button you should press and
+does not alter intervals.
+
+---
+
+## Resume
+
+Vellum records checkpoints while you study. If Anki closes, you stop early, or a
+generated session is interrupted, Resume tells you what it found before you
+continue.
+
+If the original temporary deck still matches, Vellum can resume that exact
+session. If the queue has changed because more cards became due, it says so and
+offers the current context instead of claiming it can restore an identical old
+queue. You can also abandon an old session deliberately.
+
+---
+
+## Return Ramp
+
+Return Ramp can appear after a configurable number of days away. It counts the
+cards currently available across your active deck groups and separates review,
+learning, and new cards. It then offers smaller time-based starting sessions.
+
+It does not change the backlog merely because you opened the window. Nothing is
+built until you choose a session. If an unfinished Vellum deck is already
+waiting, Return Ramp points you back to Resume or Finish first.
+
+---
+
+## Backtrack
+
+Backtrack lets you look at the previous card and the previous topic context in a
+separate read-only window. It is useful when you move on and immediately realize
+you want to compare the last card with the current one.
+
+Viewing the old card does not answer it again, undo anything, or change its
+scheduling. Backtrack keeps only what it needs for the current Anki run rather
+than building a permanent archive of card contents.
+
+---
+
+## Mind Notes
+
+A Mind Note is a short private note attached to a topic, not to a public deck or
+shared card. You might write:
+
+> Compare proximal and distal RTA next time renal physiology comes up.
+
+The note can reappear when the same topic returns. There is also a Mind Notes
+history where you can review, replace, or clear your notes. This is the one place
+where Vellum stores prose because it is text you deliberately wrote for
+yourself. It is stored locally and is not added to the Anki card.
+
+---
+
+## Session Debrief and handoffs
+
+After a session, Debrief can show:
+
+- cards completed;
+- active study time;
+- Again, Hard, Good, and Easy counts;
+- topic groups where Again and Hard answers appeared;
+- Mind Notes created or seen during the session;
+- pace information when there is enough valid timing data;
+- an optional one-line handoff for your future self.
+
+A handoff is simply something you want to remember when you return, such as
+“review nephritic vs nephrotic before adding new renal cards.” The newest handoff
+can stay on Vellum's Home panel until you mark it done, replace it, or clear it.
+
+Debrief describes what happened in the session. It does not diagnose mastery,
+predict an exam score, or grade your knowledge.
+
+---
+
+## Home panel
+
+The optional Home panel adds Vellum controls to Anki's deck screen. Depending on
+what you enable, it can show:
+
+- an interrupted session that can be resumed;
+- a shortcut to Study Builder;
+- a Time Machine starting point;
+- an estimated workload;
+- topics marked by the optional Topic Health rule;
+- your current handoff.
+
+Each block can be turned on or off in Settings.
+
+---
+
+## Topic Health
+
+Topic Health is optional and off by default. It uses recent reviews, failures,
+and due-card load to sort topics into simple study-attention states. It is meant
+to answer “where might I need to look next?”
+
+It is a rule-based study hint. It is not a mastery score, medical-knowledge
+assessment, or prediction of future performance. You can reset its recent-topic
+data from Settings.
+
+---
+
+## Session and generated-deck history
+
+Vellum keeps local records needed to explain and safely clean up the temporary
+decks it created. A generated-deck record can include the planned card IDs,
+original deck IDs, queue positions, answer ratings, answer times, and whether the
+temporary deck was removed.
+
+It does not copy the front or back of those cards into the history. Old sessions
+that predate complete tracking are labelled as reconstructed rather than being
+presented as complete.
+
+---
+
+## Getting Started, help, shortcuts, and settings
+
+The first-run guide explains the privacy and scheduling boundaries, lets you
+choose which modules to enable, and helps Vellum find useful topic roots. You can
+open it again from **Vellum > Getting Started**.
+
+**Vellum > Commands & Help** is an offline guide to the features and available
+commands. Shortcuts are checked against Anki and other add-ons. If a key is
+already taken, Vellum disables its conflicting shortcut rather than silently
+overriding the existing one.
+
+Settings include module switches, topic-root preferences, ignored tag segments,
+display renames, a parser preview for the current card, timing defaults, absence
+thresholds, Home-panel choices, history limits, diagnostic export, and separate
+controls for clearing Vellum data.
+
+Vellum refuses to erase the session/deck records it still needs to clean up an
+active temporary deck safely.
+
+---
+
+## What Vellum changes in your collection
+
+For Study Builder, Recovery, and Time Machine, Vellum creates a uniquely named
+native Anki filtered deck. It uses rescheduling mode, so answers made inside that
+deck update review history and scheduling in the normal Anki/FSRS way.
+
+Vellum records the exact deck identity and the cards Anki placed inside it. When
+the session finishes, remaining cards return to their home decks and Vellum
+removes only the temporary deck it owns. An interrupted non-empty deck stays
+available for Resume.
+
+Only one unfinished Vellum-generated session can exist at a time. If one is
+already present, Vellum asks you to Resume, Finish, or Abandon it before making
+another.
+
+### Suspended cards
+
+Suspended cards stay suspended by default.
+
+Study Builder has an optional **Unsuspend and include** switch. If you turn it
+on, Vellum shows the exact number of selected suspended cards and asks for
+confirmation. It unsuspends only those selected card IDs. They remain active
+after the session.
+
+If deck creation fails before studying begins, Vellum removes only the newly
+created deck and re-suspends exactly the cards activated by that failed attempt.
 
 ### What Vellum does not do
 
-- It does not delete your notes or cards.
-- It does not rewrite card fronts, backs, note fields, or media.
-- It does not rename, merge, add, or remove your tags.
-- It does not modify Anki's collection database schema.
-- It does not replace FSRS, choose your answer rating, or calculate replacement
-  scheduling intervals.
+- It does not delete notes or cards.
+- It does not rewrite card fronts, backs, fields, or media.
+- It does not rename, merge, add, or remove tags.
+- It does not change Anki's collection database structure.
+- It does not change FSRS settings or invent review intervals.
 - It does not silently unbury cards.
-- It does not take cards already owned by another filtered deck.
-- It does not upload your collection or send telemetry.
+- It does not pull cards out of somebody else's filtered deck.
+- It does not upload your collection.
 
-### The one optional permanent collection action
-
-Suspended cards remain excluded by default. If you explicitly enable
-**Unsuspend and include**, Vellum shows the exact number, requests confirmation,
-and unsuspends only the limited card IDs selected for that run. Those cards stay
-active afterward.
-
-If filtered-deck creation fails before study begins, Vellum removes only the
-newly created identity-checked deck and re-suspends exactly the cards activated
-for that failed attempt.
-
-Natural completion or explicit **Finish** returns remaining cards home and
-removes the exact Vellum-owned temporary deck. An interrupted non-empty session
-remains resumable. Only one unfinished Vellum-generated session may exist at a
-time; Vellum offers Resume, Finish, or Abandon instead of silently stacking
-sessions.
+No add-on can honestly promise that it will never have a bug. Keep Anki's normal
+automatic backups enabled and make occasional manual exports of collections you
+cannot afford to lose.
 
 ---
 
-## What happens to scheduling and FSRS?
+## Privacy
 
-Anki and FSRS remain authoritative.
+Vellum has no account, advertising, telemetry, analytics service, cloud server,
+API key, or remote crash reporter. It does not make outside network requests.
 
-Vellum uses a scheduled, rescheduling-enabled native filtered deck. When you
-press Again, Hard, Good, or Easy, Anki processes that answer and updates normal
-review history and scheduling. Vellum does not replace that calculation, invent
-intervals, or modify FSRS settings.
+It does not store card questions, card answers, note fields, media, Study Builder
+snippets, rendered card content, suggestion counts, or zero-result test queries.
 
-This is not preview/cram mode.
+Depending on the modules you enable, its separate database can store card/note/
+deck identifiers, timings, answer ratings, parsed topic information, generated-
+deck manifests, saved recipe selectors, and text you deliberately enter as a
+Mind Note or handoff.
 
----
-
-## Why this is useful for AnKing V12
-
-AnKing is mainly organized with hierarchical tags because one card can relate to
-several systems, exams, and resources while living in only one deck.
-
-Vellum detects the hierarchy installed in your collection instead of assuming
-one fixed V12 snapshot. When locally present, it can expose human-facing facets
-for:
-
-- Step 1, Step 2, and Step 3;
-- systems and subjects;
-- First Aid, B&B, Pathoma, Sketchy, Bootcamp, Pixorize, and other resources;
-- yield tiers;
-- Step overlap/relevance;
-- resource chapters and video paths.
-
-Parent tags include descendants. Deterministically equivalent Step copies can be
-collapsed into one readable row while every exact raw backing tag is preserved
-for the Anki query and saved recipe. Maintenance/update/duplicate tags stay out
-of the ordinary view but remain available under **All tags**.
-
-Vellum is not AnKing-only. It also supports ordinary decks/subdecks, generic
-hierarchical tags, flat tags, decks without tags, Basic, Cloze, Image Occlusion,
-and custom note/card types.
-
----
-
-## Other Vellum modules
-
-Every module can be disabled independently.
-
-- **Context:** an optional Reviewer sidebar showing the current topic hierarchy
-  and local topic evidence.
-- **Recovery:** builds a bounded Quick, Standard, Full, or Custom topic repair
-  session through Anki's native filtered-deck flow.
-- **Time Machine:** choose available minutes and deck groups; Vellum estimates a
-  bounded queue using local timing evidence and conservative fallbacks.
-- **Session HUD:** quiet cards/time/pace/ETA information during a Vellum session.
-- **Resume:** truthfully continues an interrupted generated session.
-- **Return Ramp:** after time away, shows the real backlog and suggests a smaller
-  first session.
-- **Backtrack:** opens the previous card/topic read-only without answering,
-  undoing, or changing scheduling.
-- **Mind Notes:** saves private topic-linked text you deliberately write and
-  resurfaces it when the topic returns.
-- **Session Debrief:** shows cards, active time, rating distribution, topic error
-  clusters, Mind Note activity, and an optional handoff to your future self.
-- **Commands & Help:** a complete offline guide with native shortcut labels,
-  enabled states, scopes, and conflict reporting.
-
-Topic Health is opt-in and explicitly labeled as a workflow heuristic, never a
-mastery score.
-
----
-
-## Privacy: what leaves your computer?
-
-Nothing is sent to the Vellum author or any third party.
-
-Vellum has:
-
-- no account;
-- no telemetry or analytics SDK;
-- no cloud backend;
-- no API keys;
-- no external data requests;
-- no remote crash reporter.
-
-Vellum never stores card question/answer text, note fields, media, Study Builder
-snippets, rendered card content, suggestion counts, or zero-result diagnostic
-probes.
-
-Depending on enabled modules, its separate local database may store identifiers,
-timings, answer ratings, topic metadata, exact generated-deck manifests, selected
-recipe tags/decks, and text you deliberately write in Mind Notes or handoffs.
-
-Diagnostics redact card/note IDs, collection paths, raw tag names, Mind Note
-text, and handoff text.
+The diagnostic export removes card and note IDs, private paths, raw tag names,
+Mind Note text, and handoff text. Check a diagnostic yourself before posting it.
 
 Full data guide:
 https://github.com/Fateh-Alam/vellum/blob/main/docs/PRIVACY.md
 
 ---
 
-## Installation and first use
+## Installation
 
-1. In Anki Desktop, open **Tools → Add-ons → Get Add-ons…**.
-2. Enter code **226947964**.
-3. Install and restart Anki.
-4. Read the five-step Getting Started guide. It explains privacy and scheduling
-   boundaries before asking which optional modules to enable.
-5. Open **Builder** from Anki's top bar, or use **Vellum → Build Study Deck…**.
-6. Choose Find Topics or Browse Collection, inspect the final scope, and build.
+1. In Anki Desktop, open **Tools > Add-ons > Get Add-ons**.
+2. Enter **226947964**.
+3. Install the add-on and restart Anki.
+4. Read the Getting Started guide.
+5. Open **Builder** from Anki's top bar or choose
+   **Vellum > Build Study Deck**.
 
-Getting Started can be reopened from **Vellum → Getting Started…**. The complete
-offline guide is available under **Vellum → Commands & Help…**.
-
-AnkiWeb installations are offered updates through Anki's add-on update check. A
-manually downloaded GitHub `.ankiaddon` file is not attached to the AnkiWeb
-listing and must be updated manually.
+AnkiWeb installations receive updates through Anki's normal add-on update
+check. If you install a `.ankiaddon` file manually from GitHub, that copy is not
+connected to the AnkiWeb listing and must be updated manually.
 
 ---
 
-## Compatibility and evidence
+## Compatibility and testing
 
 Vellum 1.1.0 targets Anki Desktop **25.09.4 or newer**.
 
-The v1.1.0 local qualification run included 162 unit tests, compilation and
-JavaScript checks, deterministic package integrity, a 50,000-tag performance
-fixture, disposable Anki-core deck/scheduling/rollback tests, native light/dark
-Qt visual smokes, and isolated real Anki 26.5 desktop startup checks on macOS.
+The 1.1.0 release was tested on macOS with Anki 25.9.4 and 26.5. The source has
+Windows support, but the full Windows 11 test list has not yet been completed.
+Linux has not been tested live for this release. I do not claim compatibility
+with every third-party add-on.
 
-It was qualified on macOS with Anki 25.9.4 and 26.5. Windows-compatible source
-is present, but the real Windows 11 qualification matrix remains pending. Linux
-is not live-qualified for v1.1.0. Compatibility with every third-party add-on is
-not claimed.
+The release checks included 162 unit tests, Python and JavaScript checks, package
+integrity checks, a 50,000-tag search test, temporary Anki collections for deck
+creation/scheduling/rollback tests, light and dark Qt interface checks, and real
+Anki 26.5 startup checks on macOS.
 
-Development and qualification boundary:
+Testing details:
 https://github.com/Fateh-Alam/vellum/blob/main/docs/DEVELOPMENT.md
 
 Source and release downloads:
