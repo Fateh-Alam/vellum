@@ -150,6 +150,19 @@ class SessionTests(unittest.TestCase):
             (generated.id,),
         )
 
+    def test_study_builder_is_a_generated_resumable_origin(self) -> None:
+        session = self.manager.start(
+            deck_id=17,
+            deck_name="Vellum Study Builder",
+            origin=SessionOrigin.STUDY_BUILDER,
+        )
+        self.manager.interrupt()
+        self.assertEqual(self.repo.latest_generated_resumable().id, session.id)
+        self.assertEqual(
+            self.repo.generated_resumable_for_deck(17, "Vellum Study Builder").id,
+            session.id,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

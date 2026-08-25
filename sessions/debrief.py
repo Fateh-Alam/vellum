@@ -71,6 +71,7 @@ class SessionDebrief:
         return self.origin in {
             SessionOrigin.TIME_MACHINE.value,
             SessionOrigin.RECOVERY.value,
+            SessionOrigin.STUDY_BUILDER.value,
         }
 
 
@@ -166,7 +167,11 @@ class DebriefRepository:
                 generated_metadata = {}
             if not bool(generated_metadata.get("debrief_topic_snapshots")):
                 return None
-        if session.origin in {SessionOrigin.TIME_MACHINE, SessionOrigin.RECOVERY}:
+        if session.origin in {
+            SessionOrigin.TIME_MACHINE,
+            SessionOrigin.RECOVERY,
+            SessionOrigin.STUDY_BUILDER,
+        }:
             if generated is None or generated["removed_at"] is None:
                 return None
 
@@ -278,7 +283,12 @@ class DebriefRepository:
         card_state = (
             "pending"
             if show_completion_card
-            and session.origin in {SessionOrigin.TIME_MACHINE, SessionOrigin.RECOVERY}
+            and session.origin
+            in {
+                SessionOrigin.TIME_MACHINE,
+                SessionOrigin.RECOVERY,
+                SessionOrigin.STUDY_BUILDER,
+            }
             else "none"
         )
         ended_at = int(session.ended_at or session.last_active_at)

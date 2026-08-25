@@ -51,6 +51,10 @@ MODULE_LABELS = {
     "context": ("Context Sidebar", "See the topic hierarchy while reviewing."),
     "recovery": ("Topic Recovery", "Repair a broader gap from the current card."),
     "time_machine": ("Time Machine", "Plan a realistic session for available time."),
+    "study_builder": (
+        "Study Builder",
+        "Build scheduled study decks from card text, decks, topics, and tags.",
+    ),
     "hud": ("Session HUD", "Show quiet progress and time while reviewing."),
     "resume": ("Resume", "Continue interrupted study context."),
     "return_ramp": (
@@ -152,7 +156,8 @@ def show_settings(
             "Vellum could not open its private database. Context remains available, "
             "and Backtrack works in memory, but Recovery, Time Machine, HUD, Resume, "
             "Return Ramp, Mind Notes, Topic Health, and Home are disabled for this run."
-            " Session Debrief is also unavailable until persistent storage returns."
+            " Session Debrief and Study Builder are also unavailable until persistent "
+            "storage returns."
         )
         storage_warning.setWordWrap(True)
         storage_warning.setStyleSheet("color: #9a5a2c;")
@@ -297,6 +302,57 @@ def show_settings(
     recovery_form.addRow(ask_before)
     recovery_form.addRow("Deck naming pattern", deck_pattern)
 
+    builder_form = form_tab("Study Builder")
+    builder_intro = QLabel(
+        "Recipes store only rules and selectors. Preview snippets and card fields are "
+        "never written to Vellum's database or diagnostics."
+    )
+    builder_intro.setWordWrap(True)
+    builder_shortcut_enabled = QCheckBox("Enable Study Builder shortcut")
+    builder_shortcut_enabled.setChecked(config.study_builder.shortcut_enabled)
+    builder_shortcut = QLineEdit(config.study_builder.shortcut)
+    builder_limit = QSpinBox()
+    builder_limit.setRange(1, 2_147_483_647)
+    builder_limit.setValue(config.study_builder.default_limit)
+    builder_limit.setSuffix(" cards")
+    builder_state = QComboBox()
+    _combo(
+        builder_state,
+        (
+            ("Learn a topic · due + new", "due_new"),
+            ("Review due", "due"),
+            ("Learn new", "new"),
+            ("Recent failures", "recent_failures"),
+            ("All matching", "all"),
+        ),
+        config.study_builder.default_state_preset,
+    )
+    builder_order = QComboBox()
+    _combo(
+        builder_order,
+        (
+            ("Due first", "due"),
+            ("Most at risk", "most_at_risk"),
+            ("Most lapses", "most_lapses"),
+            ("Oldest seen", "oldest_seen"),
+            ("Order added", "added"),
+            ("Random", "random"),
+        ),
+        config.study_builder.default_order,
+    )
+    builder_snippets = QCheckBox("Show ephemeral card snippets")
+    builder_snippets.setChecked(config.study_builder.show_snippets)
+    builder_anking = QCheckBox("Show detected AnKing facets")
+    builder_anking.setChecked(config.study_builder.show_anking_facets)
+    builder_form.addRow(builder_intro)
+    builder_form.addRow(builder_shortcut_enabled)
+    builder_form.addRow("Shortcut", builder_shortcut)
+    builder_form.addRow("Default limit", builder_limit)
+    builder_form.addRow("Default preset", builder_state)
+    builder_form.addRow("Default order", builder_order)
+    builder_form.addRow(builder_snippets)
+    builder_form.addRow(builder_anking)
+
     time_form = form_tab("Time + HUD")
     presets = QLineEdit(", ".join(str(value) for value in config.time_machine.presets_minutes))
     adaptive = QCheckBox("Use adaptive review timing")
@@ -394,6 +450,7 @@ def show_settings(
         ("show_greeting", "Home: greeting"),
         ("show_continue", "Home: Continue block"),
         ("show_time_machine", "Home: Time Machine block"),
+        ("show_study_builder", "Home: Study Builder block"),
         ("show_weak_topics", "Home: topics needing attention"),
         ("show_estimated_workload", "Home: estimated workload"),
     ):
@@ -522,6 +579,7 @@ def show_settings(
     rebuild_cache = QPushButton("Rebuild topic cache")
     clear_sessions = QPushButton("Clear session history")
     clear_generated = QPushButton("Clear generated deck history")
+    clear_builder = QPushButton("Clear Study Builder recipes and recent searches")
     clear_timing = QPushButton("Clear timing history")
     clear_mind_notes = QPushButton("Clear Mind Notes")
     reset_health = QPushButton("Reset Topic Health and recent topics")
@@ -531,6 +589,7 @@ def show_settings(
         rebuild_cache,
         clear_sessions,
         clear_generated,
+        clear_builder,
         clear_timing,
         clear_mind_notes,
         reset_health,
@@ -586,6 +645,13 @@ def show_settings(
                 "generated_deck_cards",
                 "generated_deck_history",
             ),
+        ),
+    )
+    qconnect(
+        clear_builder.clicked,
+        lambda: clear_tables(
+            "Clear Study Builder recipes and recent searches",
+            ("study_builder_recent", "study_recipes"),
         ),
     )
     qconnect(clear_timing.clicked, lambda: clear_tables("Clear timing history", ("timing_samples", "timing_stats")))
@@ -654,6 +720,7 @@ def show_settings(
             general=replace(config.general, show_menu=show_menu.isChecked(), keyboard_shortcuts=keyboard_shortcuts.isChecked(), animations=animations.isChecked(), reduced_motion=reduced.isChecked(), debug_logging=debug.isChecked(), theme=theme.currentData()),
             context=replace(config.context, side=context_side.currentData(), default_state=context_state.currentData(), width=context_width.value(), auto_collapse_on_new_card=auto_collapse.isChecked(), pinned=context_pinned.isChecked(), shortcut_enabled=context_shortcut_enabled.isChecked(), shortcut=context_shortcut.text().strip() or "C", collapse_shortcut=collapse_shortcut.text().strip() or "Escape", **{name: box.isChecked() for name, box in context_checks.items()}),
             recovery=replace(config.recovery, shortcut_enabled=recovery_shortcut_enabled.isChecked(), shortcut=recovery_shortcut.text().strip() or "Shift+C", default_level=recovery_level.currentData(), default_mode=recovery_mode.currentData(), include_new=include_new.isChecked(), include_current=include_current.isChecked(), recent_failure_days=failure_days.value(), max_quick=max_quick.value(), max_standard=max_standard.value(), ask_before_create=ask_before.isChecked(), deck_name_pattern=pattern),
+            study_builder=replace(config.study_builder, shortcut_enabled=builder_shortcut_enabled.isChecked(), shortcut=builder_shortcut.text().strip() or "Ctrl+Shift+B", default_limit=builder_limit.value(), default_state_preset=builder_state.currentData(), default_order=builder_order.currentData(), show_snippets=builder_snippets.isChecked(), show_anking_facets=builder_anking.isChecked()),
             time_machine=replace(config.time_machine, presets_minutes=tuple(preset_values) or config.time_machine.presets_minutes, adaptive_timing=adaptive.isChecked(), minimum_history=minimum_history.value(), end_behavior=end_behavior.currentData(), fallback_seconds=fallback, shortcut_enabled=time_shortcut_enabled.isChecked(), shortcut=time_shortcut.text().strip() or "Ctrl+Shift+T", automatically_start_hud=automatically_start_hud.isChecked(), show_estimates_on_deck=show_estimates_on_deck.isChecked()),
             hud=replace(config.hud, placement=hud_placement.currentData(), **{name: box.isChecked() for name, box in hud_checks.items()}),
             resume=replace(config.resume, enable_checkpoints=checkpoints.isChecked(), checkpoint_seconds=checkpoint_seconds.value(), detect_inactivity=detect_inactivity.isChecked(), inactivity_seconds=inactivity.value(), show_on_launch=show_launch.isChecked(), show_on_home=show_home_resume.isChecked(), stale_after_days=stale_days.value(), history_days=history_days.value(), maximum_sessions=max_sessions.value()),

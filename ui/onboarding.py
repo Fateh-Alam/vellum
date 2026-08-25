@@ -18,13 +18,17 @@ from ..topics.normalization import (
 )
 
 
-ONBOARDING_VERSION = 2
+ONBOARDING_VERSION = 3
 
 
 MODULE_COPY = {
     "context": ("Context", "See where the current card belongs."),
     "recovery": ("Recovery", "Repair the broader topic exposed by one card."),
     "time_machine": ("Time Machine", "Plan by the time you actually have."),
+    "study_builder": (
+        "Study Builder",
+        "Search one idea, check alternatives, and build a scheduled session.",
+    ),
     "hud": ("Session HUD", "Keep quiet progress visible while reviewing."),
     "resume": ("Resume", "Continue interrupted study without false promises."),
     "return_ramp": ("Return Ramp", "Ease back in after an absence."),
@@ -177,6 +181,7 @@ def show_onboarding(mw: Any, app: Any, detected_roots: tuple[str, ...]) -> None:
         ("Know where you are", "Context places a card inside its larger topic."),
         ("Recover the real gap", "Recovery turns one failure into a deliberate topic repair."),
         ("Plan from available time", "Time Machine builds only the bounded queue you chose."),
+        ("Build the exact scope", "Study Builder guides you from topics to decks, or from decks to their tags."),
         ("Leave with meaning", "Debrief records patterns and an optional handoff to your future self."),
     ):
         block = QLabel(f"<b>{title}</b><br>{copy}")
@@ -280,9 +285,11 @@ def show_onboarding(mw: Any, app: Any, detected_roots: tuple[str, ...]) -> None:
     # Avoid ampersands here: Qt treats them as mnemonic markers, which can turn
     # human labels into platform-specific underscore artifacts.
     ready_time_machine = QPushButton("Finish, then Start Time Machine")
+    ready_builder = QPushButton("Finish, then Open Study Builder")
     ready_settings = QPushButton("Finish, then Open Settings")
     ready_help = QPushButton("Finish, then Open Guide")
     ready_layout.addWidget(ready_time_machine)
+    ready_layout.addWidget(ready_builder)
     ready_layout.addWidget(ready_settings)
     ready_layout.addWidget(ready_help)
     ready_layout.addStretch(1)
@@ -347,7 +354,7 @@ def show_onboarding(mw: Any, app: Any, detected_roots: tuple[str, ...]) -> None:
         app.apply_config(
             replace(
                 current,
-                config_version=2,
+                config_version=3,
                 onboarding_completed=True,
                 onboarding_version=ONBOARDING_VERSION,
                 onboarding_invitation_version=ONBOARDING_VERSION,
@@ -374,6 +381,11 @@ def show_onboarding(mw: Any, app: Any, detected_roots: tuple[str, ...]) -> None:
             open_time_machine = getattr(module, "open", None)
             if callable(open_time_machine) and getattr(module, "running", False):
                 open_time_machine()
+        elif destination == "study_builder":
+            module = app.services.modules.get("study_builder")
+            open_builder = getattr(module, "open", None)
+            if callable(open_builder) and getattr(module, "running", False):
+                open_builder()
         elif destination == "settings":
             app.services.events.emit("settings_requested", "General")
         else:
@@ -386,7 +398,7 @@ def show_onboarding(mw: Any, app: Any, detected_roots: tuple[str, ...]) -> None:
         app.apply_config(
             replace(
                 current,
-                config_version=2,
+                config_version=3,
                 onboarding_invitation_version=ONBOARDING_VERSION,
             )
         )
@@ -397,6 +409,7 @@ def show_onboarding(mw: Any, app: Any, detected_roots: tuple[str, ...]) -> None:
     qconnect(next_button.clicked, continue_or_finish)
     qconnect(later.clicked, set_up_later)
     qconnect(ready_time_machine.clicked, lambda: finish_then("time_machine"))
+    qconnect(ready_builder.clicked, lambda: finish_then("study_builder"))
     qconnect(ready_settings.clicked, lambda: finish_then("settings"))
     qconnect(ready_help.clicked, lambda: finish_then("help"))
     refresh()
@@ -467,7 +480,7 @@ class OnboardingInvitationController:
         payload = encoded_payload(
             {
                 "title": "Vellum has a new guided setup",
-                "copy": "Meet Session Debrief, review your native commands, and reconnect topic parsing without changing your current setup unless you finish the tour.",
+                "copy": "Meet Study Builder and Session Debrief, review your native commands, and reconnect topic parsing without changing your current setup unless you finish the tour.",
             }
         )
         try:
@@ -492,7 +505,7 @@ class OnboardingInvitationController:
             self._app.apply_config(
                 replace(
                     current,
-                    config_version=2,
+                    config_version=3,
                     onboarding_invitation_version=ONBOARDING_VERSION,
                 )
             )

@@ -26,6 +26,7 @@ def install_vellum_menu(mw: Any, app: Any) -> Any:
     entries = (
         ("Resume Last Session", "resume", "request_resume", "Resume"),
         ("Return Ramp…", "return_ramp", "open", "Return Ramp"),
+        ("Build Study Deck…", "study_builder", "open", "Study Builder"),
         ("Start Time Machine…", "time_machine", "open", "Time Machine"),
         ("Recover Current Topic", "recovery", "open", "Topic Recovery"),
         ("Backtrack…", "backtrack", "open", "Backtrack"),
@@ -91,6 +92,17 @@ def install_vellum_menu(mw: Any, app: Any) -> Any:
                 return
             showInfo(
                 "Enable Time Machine to safely return its temporary cards.",
+                parent=mw,
+            )
+            return
+        if session.origin is SessionOrigin.STUDY_BUILDER:
+            study_builder = app.services.modules.get("study_builder")
+            finish_builder = getattr(study_builder, "finish_current", None)
+            if callable(finish_builder):
+                finish_builder()
+                return
+            showInfo(
+                "Enable Study Builder to safely return its temporary cards.",
                 parent=mw,
             )
             return

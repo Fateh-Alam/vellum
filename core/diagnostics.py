@@ -21,6 +21,8 @@ RESET_TABLES = (
     "generated_deck_card_answers",
     "generated_deck_cards",
     "generated_deck_history",
+    "study_builder_recent",
+    "study_recipes",
     "session_cards",
     "sessions",
     "timing_samples",
@@ -54,6 +56,7 @@ def anonymized_config(config: VellumConfig) -> dict[str, Any]:
             **config.recovery.__dict__,
             "deck_name_pattern": "<redacted pattern>",
         },
+        "study_builder": config.study_builder.__dict__,
         "home": config.home.__dict__,
         "topic_parsing": {
             "preferred_root_count": len(config.topic_parsing.preferred_roots),

@@ -27,7 +27,14 @@ def main() -> None:
     imported: list[str] = []
     for path in sorted(ROOT.rglob("*.py")):
         relative = path.relative_to(ROOT)
-        if relative.parts[0] in {"scripts", "tests"}:
+        if relative.parts[0] in {
+            "dist",
+            "output",
+            "scripts",
+            "tests",
+            "tmp",
+            "user_files",
+        }:
             continue
         if relative == Path("__init__.py"):
             continue
@@ -44,14 +51,17 @@ def main() -> None:
     from aqt.filtered_deck import FilteredDeckConfigDialog
     from aqt.operations import QueryOp
     from aqt.operations.deck import remove_decks, set_current_deck
+    from aqt.operations.scheduling import unsuspend_cards
     from anki.decks import DeckManager
 
     hook_names = (
         "card_will_show",
+        "collection_did_load",
         "deck_browser_did_render",
         "filtered_deck_dialog_did_add_or_update_deck",
         "overview_did_refresh",
         "overview_will_render_content",
+        "operation_did_execute",
         "profile_did_open",
         "profile_will_close",
         "reviewer_did_answer_card",
@@ -59,6 +69,8 @@ def main() -> None:
         "reviewer_will_end",
         "reviewer_will_show_context_menu",
         "state_shortcuts_will_change",
+        "sync_did_finish",
+        "top_toolbar_did_init_links",
         "webview_did_receive_js_message",
         "webview_will_set_content",
     )
@@ -68,10 +80,12 @@ def main() -> None:
     qt_names = (
         "QAbstractItemView",
         "QAction",
+        "QActionGroup",
         "QButtonGroup",
         "QColor",
         "QCheckBox",
         "QComboBox",
+        "QCompleter",
         "QDialog",
         "QDialogButtonBox",
         "QDoubleSpinBox",
@@ -79,11 +93,15 @@ def main() -> None:
         "QFormLayout",
         "QFrame",
         "QGroupBox",
+        "QHeaderView",
         "QHBoxLayout",
+        "QInputDialog",
         "QKeySequence",
         "QLabel",
         "QLineEdit",
+        "QListView",
         "QListWidget",
+        "QMainWindow",
         "QMenu",
         "QMessageBox",
         "QPlainTextEdit",
@@ -94,11 +112,15 @@ def main() -> None:
         "QShortcut",
         "QSpinBox",
         "QSplitter",
+        "QStackedWidget",
         "QTabWidget",
         "QTableWidget",
         "QTableWidgetItem",
         "QTextBrowser",
         "QTimer",
+        "QToolButton",
+        "QTreeWidget",
+        "QTreeWidgetItem",
         "QVBoxLayout",
         "QWidget",
         "qconnect",
@@ -109,6 +131,7 @@ def main() -> None:
     assert QueryOp is not None
     assert set_current_deck is not None
     assert remove_decks is not None
+    assert unsuspend_cards is not None
     assert FilteredDeckConfigDialog is not None
     assert callable(getattr(DeckManager, "id_for_name", None))
     assert callable(getattr(DeckManager, "name_if_exists", None))

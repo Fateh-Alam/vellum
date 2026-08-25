@@ -89,6 +89,12 @@ class SessionTrackingCompletionTests(unittest.TestCase):
         self.tracking._reviewer_ended()
         self.assertEqual(self.manager.current.status, SessionStatus.INTERRUPTED)
 
+    def test_study_builder_waits_for_exact_deck_cleanup(self) -> None:
+        self.manager.start(origin=SessionOrigin.STUDY_BUILDER)
+        self.tracking._collection = Collection(0)
+        self.tracking._reviewer_ended()
+        self.assertEqual(self.manager.current.status, SessionStatus.INTERRUPTED)
+
     def test_timing_aggregation_is_deferred_past_next_card_hook(self) -> None:
         mw = DeferredMainWindow()
         timing = TimingRecorder()

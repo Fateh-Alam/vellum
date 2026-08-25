@@ -102,6 +102,8 @@ def main() -> None:
         raise RuntimeError("Vellum did not finish loading in disposable Anki")
 
     mw, addon_app = loaded
+    if "vellum-study-builder" not in mw.toolbar.link_handlers:
+        raise RuntimeError("Study Builder top-toolbar link was not installed")
     running = sorted(addon_app.services.modules.running_names())
     expected_running = sorted(
         [
@@ -114,6 +116,7 @@ def main() -> None:
             "resume",
             "return_ramp",
             "session_debrief",
+            "study_builder",
             "time_machine",
         ]
     )
@@ -145,6 +148,7 @@ def main() -> None:
             "hud_only": flags("hud"),
             "context_recovery": flags("context", "recovery"),
             "time_machine_resume": flags("time_machine", "resume"),
+            "study_builder_only": flags("study_builder"),
             "all_modules": flags(*module_names),
             "all_disabled": flags(),
         }
@@ -194,6 +198,26 @@ def main() -> None:
         if not mw.grab().save(str(main_path)):
             raise RuntimeError("unable to save deck browser screenshot")
         screenshots.append(main_path.name)
+
+        mw.toolbar.link_handlers["vellum-study-builder"]()
+        builder_module = addon_app.services.modules.get("study_builder")
+        builder_deadline = time.monotonic() + 10
+        builder_window = None
+        while time.monotonic() < builder_deadline:
+            app.processEvents()
+            builder_window = getattr(builder_module, "_window", None)
+            if builder_window is not None and builder_window.isVisible():
+                break
+            time.sleep(0.02)
+        if builder_window is None or not builder_window.isVisible():
+            raise RuntimeError("Study Builder toolbar link did not open its window")
+        builder_path = screenshot_dir / "study-builder-toolbar.png"
+        if not builder_window.grab().save(str(builder_path)):
+            raise RuntimeError("unable to save toolbar-launched Study Builder")
+        screenshots.append(builder_path.name)
+        builder_window.close()
+        for _index in range(10):
+            app.processEvents()
 
         original_exec = QDialog.exec
 
@@ -957,6 +981,7 @@ def main() -> None:
         ),
         "schema_version": addon_app.services.database.schema_version,
         "screenshots": screenshots,
+        "study_builder_toolbar_link": True,
         "settings_action_installed": addon_app.settings_action is not None,
         "theme": "dark" if args.dark else "light",
         "vellum_loaded": True,

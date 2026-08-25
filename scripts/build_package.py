@@ -27,6 +27,7 @@ ROOT_FILES = {
 }
 PACKAGE_DIRS = {
     "anki",
+    "builder",
     "continuity",
     "core",
     "features",
@@ -75,6 +76,23 @@ def verify(path: Path) -> None:
         names = archive.namelist()
         if "__init__.py" not in names or "manifest.json" not in names:
             raise RuntimeError("Archive is missing Anki entry metadata")
+        required_runtime = {
+            "builder/__init__.py",
+            "builder/catalog.py",
+            "builder/models.py",
+            "builder/query.py",
+            "builder/repository.py",
+            "builder/scope.py",
+            "anki/study_builder.py",
+            "features/study_builder.py",
+            "ui/study_builder.py",
+        }
+        missing_runtime = sorted(required_runtime.difference(names))
+        if missing_runtime:
+            raise RuntimeError(
+                "Archive is missing Study Builder runtime files: "
+                + ", ".join(missing_runtime)
+            )
         if any(name.startswith("vellum/") for name in names):
             raise RuntimeError("Top-level add-on folder must not be included")
         if any("__pycache__" in name or name.endswith((".sqlite3", ".log")) for name in names):

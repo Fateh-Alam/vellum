@@ -32,7 +32,7 @@ class DatabaseTests(unittest.TestCase):
             database = Database(Path(directory) / "vellum.sqlite3")
             database.migrate()
             database.migrate()
-            self.assertEqual(database.schema_version, 7)
+            self.assertEqual(database.schema_version, 8)
             tables = {
                 row[0]
                 for row in database.connect().execute(
@@ -56,6 +56,8 @@ class DatabaseTests(unittest.TestCase):
                     "mind_notes",
                     "session_debriefs",
                     "session_mind_note_events",
+                    "study_recipes",
+                    "study_builder_recent",
                 }.issubset(tables)
             )
             session_columns = {
@@ -74,7 +76,7 @@ class DatabaseTests(unittest.TestCase):
             )
             database.close()
 
-    def test_schema_six_database_upgrades_in_place_to_schema_seven(self) -> None:
+    def test_schema_six_database_upgrades_in_place_to_schema_eight(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             database = Database(Path(directory) / "vellum.sqlite3")
             connection = database.connect()
@@ -107,7 +109,7 @@ class DatabaseTests(unittest.TestCase):
             connection.commit()
 
             database.migrate()
-            self.assertEqual(database.schema_version, 7)
+            self.assertEqual(database.schema_version, 8)
             self.assertEqual(
                 connection.execute(
                     "SELECT card_id FROM session_cards WHERE session_id = 'preserved'"

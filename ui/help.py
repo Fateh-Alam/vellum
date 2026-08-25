@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 PRODUCT_PROMISE = (
     "Vellum is a local-first continuity layer. Anki and FSRS remain fully "
-    "responsible for scheduling; Vellum adds context, time-boxing, recovery, "
+    "responsible for scheduling; Vellum adds context, filtered study building, time-boxing, recovery, "
     "and safe return to unfinished work."
 )
 PRIVACY_PROMISE = (
@@ -34,7 +34,8 @@ HELP_SECTIONS = (
         <ol><li>Open any deck and begin reviewing.</li>
         <li>Use Context when you need the larger topic hierarchy.</li>
         <li>Use Recovery when one failed card reveals a broader gap.</li>
-        <li>Use Time Machine when your available time is the real constraint.</li></ol>
+        <li>Use Time Machine when your available time is the real constraint.</li>
+        <li>Use Study Builder when topics, tags, or a deck scope define the work.</li></ol>
         """,
     ),
     (
@@ -46,6 +47,19 @@ HELP_SECTIONS = (
         temporary filtered deck. Anki remains responsible for scheduling.</p>
         <h2>Time Machine</h2><p>Choose a duration and deck scope. Vellum estimates a
         bounded queue from your local pace and safe fallbacks.</p>
+        <h2>Study Builder</h2><p>Open it from <strong>Builder</strong> in Anki's
+        top navigation bar. Choose <strong>Find Topics</strong> to select one or
+        more alternative topics first, then choose the parent decks or subdecks
+        they must come from. Choose <strong>Browse Collection</strong> to select
+        decks first, then explore only the hierarchical tags actually present in
+        that scope. Checking a parent includes descendants; opening its arrow only
+        reveals children. The built-in tutorial and question-mark help explain
+        unfamiliar controls, while the final card preview stays inspect-only.
+        Topic search and scoped-tag filtering are local and never query the
+        collection while you type. Options can avoid sibling cards and target a
+        due/new mix while preserving the requested limit.
+        Suspended cards remain excluded unless you explicitly confirm permanent activation.
+        Saved recipes store rules only and re-evaluate the current collection on every run.</p>
         <h2>Resume and Return Ramp</h2><p>Resume explains whether the old queue still
         matches. Return Ramp offers a calm re-entry after an absence.</p>
         <h2>Debrief</h2><p>Generated sessions finish with a quiet Deck Browser card.
@@ -92,7 +106,8 @@ HELP_SECTIONS = (
         "Privacy",
         """
         <h1>Privacy and Local Data</h1><p>Vellum has no account, telemetry, cloud
-        backend, API keys, or external requests. Session records contain identifiers,
+        backend, API keys, or external requests. Study Builder snippets are ephemeral and
+        never stored or logged. Session records contain identifiers,
         timing, ratings, topic metadata, and text you deliberately enter as a Mind
         Note or handoff. Card question and answer text are never copied.</p>
         <p>Settings → Data can clear individual histories, reset all Vellum data, or

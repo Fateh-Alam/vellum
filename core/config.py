@@ -11,6 +11,10 @@ SIDES = frozenset({"left", "right"})
 SIDEBAR_STATES = frozenset({"collapsed", "expanded", "remember"})
 RECOVERY_LEVELS = frozenset({"current", "remember_last"})
 RECOVERY_MODES = frozenset({"quick", "standard", "full"})
+BUILDER_STATES = frozenset({"due_new", "due", "new", "recent_failures", "all"})
+BUILDER_ORDERS = frozenset(
+    {"due", "most_at_risk", "most_lapses", "oldest_seen", "added", "random"}
+)
 MAX_ABSENCE_DAYS = 2_147_483_647
 
 
@@ -51,6 +55,7 @@ class ModuleFlags:
     session_debrief: bool = True
     topic_health: bool = False
     home_panel: bool = True
+    study_builder: bool = True
 
     @classmethod
     def from_mapping(cls, raw: Mapping[str, Any]) -> "ModuleFlags":
@@ -429,12 +434,54 @@ class RecoveryConfig:
 
 
 @dataclass(frozen=True)
+class StudyBuilderConfig:
+    shortcut_enabled: bool = True
+    shortcut: str = "Ctrl+Shift+B"
+    default_limit: int = 100
+    default_state_preset: str = "due_new"
+    default_order: str = "due"
+    show_snippets: bool = True
+    show_anking_facets: bool = True
+    tutorial_version: int = 0
+
+    @classmethod
+    def from_mapping(cls, raw: Mapping[str, Any]) -> "StudyBuilderConfig":
+        defaults = cls()
+        shortcut = raw.get("shortcut")
+        return cls(
+            shortcut_enabled=_bool(raw.get("shortcut_enabled"), True),
+            shortcut=(
+                shortcut.strip()
+                if isinstance(shortcut, str) and shortcut.strip()
+                else defaults.shortcut
+            ),
+            default_limit=_bounded_int(
+                raw.get("default_limit"), defaults.default_limit, 1, MAX_ABSENCE_DAYS
+            ),
+            default_state_preset=_choice(
+                raw.get("default_state_preset"),
+                defaults.default_state_preset,
+                BUILDER_STATES,
+            ),
+            default_order=_choice(
+                raw.get("default_order"), defaults.default_order, BUILDER_ORDERS
+            ),
+            show_snippets=_bool(raw.get("show_snippets"), True),
+            show_anking_facets=_bool(raw.get("show_anking_facets"), True),
+            tutorial_version=_bounded_int(
+                raw.get("tutorial_version"), defaults.tutorial_version, 0, 1
+            ),
+        )
+
+
+@dataclass(frozen=True)
 class HomeConfig:
     show_continue: bool = True
     show_time_machine: bool = True
     show_weak_topics: bool = True
     show_estimated_workload: bool = True
     show_greeting: bool = True
+    show_study_builder: bool = True
 
     @classmethod
     def from_mapping(cls, raw: Mapping[str, Any]) -> "HomeConfig":
@@ -522,7 +569,7 @@ class TopicParsingConfig:
 
 @dataclass(frozen=True)
 class VellumConfig:
-    config_version: int = 2
+    config_version: int = 3
     enabled: bool = True
     onboarding_completed: bool = False
     onboarding_version: int = 0
@@ -538,6 +585,7 @@ class VellumConfig:
     mind_notes: MindNotesConfig = field(default_factory=MindNotesConfig)
     debrief: DebriefConfig = field(default_factory=DebriefConfig)
     recovery: RecoveryConfig = field(default_factory=RecoveryConfig)
+    study_builder: StudyBuilderConfig = field(default_factory=StudyBuilderConfig)
     home: HomeConfig = field(default_factory=HomeConfig)
     topic_parsing: TopicParsingConfig = field(default_factory=TopicParsingConfig)
 
@@ -547,14 +595,14 @@ class VellumConfig:
         completed = _bool(raw.get("onboarding_completed"), False)
         inferred_onboarding_version = 1 if completed else 0
         return cls(
-            config_version=2,
+            config_version=3,
             enabled=_bool(raw.get("enabled"), True),
             onboarding_completed=completed,
             onboarding_version=_bounded_int(
-                raw.get("onboarding_version"), inferred_onboarding_version, 0, 2
+                raw.get("onboarding_version"), inferred_onboarding_version, 0, 3
             ),
             onboarding_invitation_version=_bounded_int(
-                raw.get("onboarding_invitation_version"), 0, 0, 2
+                raw.get("onboarding_invitation_version"), 0, 0, 3
             ),
             modules=ModuleFlags.from_mapping(_mapping(raw.get("modules"))),
             general=GeneralConfig.from_mapping(_mapping(raw.get("general"))),
@@ -573,6 +621,9 @@ class VellumConfig:
             ),
             debrief=DebriefConfig.from_mapping(_mapping(raw.get("debrief"))),
             recovery=RecoveryConfig.from_mapping(_mapping(raw.get("recovery"))),
+            study_builder=StudyBuilderConfig.from_mapping(
+                _mapping(raw.get("study_builder"))
+            ),
             home=HomeConfig.from_mapping(_mapping(raw.get("home"))),
             topic_parsing=TopicParsingConfig.from_mapping(
                 _mapping(raw.get("topic_parsing"))

@@ -7,6 +7,11 @@ Use **Vellum → Settings…** for the structured settings window. It includes:
 - Context content, position, width, remembered/pinned/auto-collapse behavior,
   appearance, and shortcuts;
 - Recovery hierarchy defaults, modes, inclusion rules, limits, and shortcut;
+- Study Builder default limit/preset/order, conflict-checked shortcut, ephemeral
+  snippet visibility, AnKing facet visibility, the New preset, one-time tutorial
+  version, and independent module switch. Saved recipes retain the chosen
+  workflow, exact topic tags, source decks, sibling avoidance, and due/new
+  composition;
 - Time Machine presets, adaptive timing, fallbacks, deck Overview entry, every
   HUD metric/placement, and end behavior;
 - Resume checkpoints, inactivity, staleness, history retention, and Home blocks;
@@ -27,12 +32,13 @@ values before use. Reset actions affect only Vellum's separate SQLite database;
 **Reset all** always requires confirmation.
 
 Default portable shortcuts are **C** for Context, **Shift+C** for Recovery,
-**Alt+B** for Backtrack, and **Alt+M** for Mind Notes. Vellum stores portable Qt
+**Ctrl+Shift+B** for Study Builder, **Alt+B** for Backtrack, and **Alt+M** for Mind Notes. Vellum stores portable Qt
 sequences but displays `QKeySequence` NativeText: macOS may show symbols while
 Windows shows native Alt/Ctrl labels.
 Time Machine uses **Ctrl+Shift+T** because Anki 25.9.4 owns plain `T`; Vellum
 still detects and disables any runtime conflict rather than overriding it.
 
-Configuration schema version 2 tracks onboarding content separately from the
-legacy completion boolean. Session Debrief can be disabled independently and
-is unavailable during the deliberate persistence fallback.
+Configuration schema version 3 adds Study Builder while continuing to track
+onboarding content separately from the legacy completion boolean. Session
+Debrief and Study Builder can be disabled independently and are unavailable
+during the deliberate persistence fallback.

@@ -5,13 +5,13 @@ Download code: **226947964**
 
 ## Title
 
-Vellum - Study Continuity, Time Machine, Recovery, and Debrief
+Vellum - Study Builder, Time Machine, Recovery, and Debrief
 
 ## Summary
 
-Vellum adds topic context, time-boxed sessions, interruption-safe Resume,
-deliberate topic Recovery, Mind Notes, and learner-facing Session Debriefs while
-leaving Anki and FSRS fully responsible for scheduling.
+Vellum adds a guided topic/deck Study Builder, topic context, time-boxed
+sessions, interruption-safe Resume, deliberate Recovery, Mind Notes, and
+learner-facing Debriefs while leaving Anki and FSRS responsible for scheduling.
 
 ## Description
 
@@ -20,6 +20,10 @@ leaving Anki and FSRS fully responsible for scheduling.
 Vellum is a local-first continuity layer for Anki Desktop:
 
 - Context shows the current topic hierarchy in Reviewer.
+- Study Builder offers two simple full-window paths: select topics and then the
+  decks/subdecks they should come from, or select decks first and browse only the
+  hierarchical tags actually present inside them. It is designed for AnKing's
+  tag-first organization and also supports ordinary decks and generic tags.
 - Recovery builds a transparent temporary topic session through Anki's native
   filtered-deck flow.
 - Time Machine creates a bounded session for the time and deck groups you choose.
@@ -41,8 +45,8 @@ separate local SQLite database under the add-on's `user_files` directory.
 **Scheduling:** Anki and FSRS remain authoritative. Vellum does not replace the
 scheduler or modify Anki's collection schema.
 
-**Compatibility:** Vellum 1.0.0 targets Anki 25.09.4 or newer and is qualified on
-macOS with Anki 25.9.4. Windows-compatible source is present, but the real
+**Compatibility:** Vellum 1.1.0 targets Anki 25.09.4 or newer and is qualified on
+macOS with Anki 25.9.4 and 26.5. Windows-compatible source is present, but the real
 Windows 11 qualification matrix is still pending and is not claimed as passed.
 
 Source, documentation, release downloads, and support:

@@ -3,7 +3,7 @@
 **Anki remembers your cards. Vellum remembers your studying.**
 
 Vellum is a local-first study-continuity add-on for Anki Desktop. It adds topic
-context, deliberate recovery, realistic time-boxing, interruption-safe sessions,
+context, intent-first study building, deliberate recovery, realistic time-boxing, interruption-safe sessions,
 and learner-facing debriefs while leaving Anki and FSRS fully responsible for
 scheduling.
 
@@ -16,6 +16,18 @@ requests. It never copies card question or answer text.
   maturity, retention, failures, and source badges.
 - **Recovery** — a transparent Quick, Standard, Full, or Custom topic repair
   session built through Anki's native filtered-deck workflow.
+- **Study Builder** — a full-window, guided deck builder with two clear paths.
+  **Find Topics** lets you choose several topics and then shows only decks that
+  contain them. **Browse Collection** lets you select parent decks/subdecks and
+  then exposes only the tag hierarchy actually present inside that scope.
+  Parent decks and tags include descendants; choosing specific children removes
+  a redundant parent. The last step is a calm, inspect-only availability preview
+  followed by **Build & Study**. A one-time tutorial and contextual `?` help are
+  built in. Topic typing and tag filtering use immutable local indexes and never
+  launch collection searches. Ordering, activation, Browser handoff, sibling
+  control, and reusable recipes remain available without exposing Anki query
+  syntax. Open it from Anki's **Builder** top-bar item, the Vellum menu, Home,
+  Overview, or shortcut.
 - **Time Machine** — choose the time you have and the deck groups you want;
   Vellum estimates a bounded queue from local timing evidence and safe fallbacks.
 - **Session HUD** — quiet progress, elapsed/remaining time, pace, target, and ETA
@@ -45,12 +57,12 @@ code, install, and restart Anki.
 
 ### From GitHub
 
-1. Download `vellum-1.0.0.ankiaddon` from the latest GitHub release.
+1. Download `vellum-1.1.0.ankiaddon` from the latest GitHub release.
 2. In Anki, open **Tools → Add-ons → Install from file…**.
 3. Select the downloaded file, restart Anki, and complete Getting Started.
 
-Vellum 1.0.0 targets Anki **25.09.4 or newer**. It is qualified on macOS with
-Anki 25.9.4. The source is designed for native Qt behavior on Windows, but the
+Vellum 1.1.0 targets Anki **25.09.4 or newer**. It is qualified on macOS with
+Anki 25.9.4 and 26.5. The source is designed for native Qt behavior on Windows, but the
 real Windows 11 matrix is still pending; source compatibility is not presented
 as live Windows proof. See [Windows qualification](docs/WINDOWS_11_QUALIFICATION.md).
 
@@ -73,6 +85,9 @@ appearance, session behavior, data retention, and diagnostics.
 - Stored session records contain identifiers, timing, ratings, topic metadata,
   and only text deliberately written as a Mind Note or handoff.
 - Card question and answer text are never copied into Vellum storage.
+- Study Builder snippets are ephemeral. Recipes and recent runs store workflow
+  choices and exact user-selected tag/deck selectors only—not rendered card content, extracted
+  fields, suggestion counts, or zero-result probes.
 - Diagnostics redact card/note IDs, paths, tag names, Mind Note text, and handoff
   text.
 - Generated temporary decks are removed only after Vellum verifies the exact
@@ -91,6 +106,7 @@ Conflicts are reported and never silently override Anki or another add-on.
 | Context | `C` | Reviewer |
 | Recovery | `Shift+C` | Reviewer |
 | Time Machine | `Ctrl+Shift+T` | Anywhere |
+| Study Builder | `Ctrl+Shift+B` | Anywhere |
 | Backtrack | `Alt+B` | Anywhere |
 | Mind Note | `Alt+M` | Anywhere |
 | Collapse Context | `Escape` | Reviewer panel |
@@ -105,6 +121,7 @@ Anki. Qt and WebView dependencies stay at the integration edge.
 python3 -m unittest discover -s tests -t .. -v
 env PYTHONPYCACHEPREFIX=/tmp/vellum-pycache python3 -m compileall -q .
 node --check ui/assets/vellum.js
+python3 scripts/study_builder_anki_smoke.py  # use Anki's bundled Python
 python3 scripts/build_package.py
 ```
 

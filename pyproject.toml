@@ -1,6 +1,6 @@
 [project]
 name = "vellum-anki"
-version = "1.0.0"
+version = "1.1.0"
 description = "A modular study-continuity layer for Anki Desktop"
 requires-python = ">=3.10"
 

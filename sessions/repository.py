@@ -146,7 +146,7 @@ class SessionRepository:
             WHERE status IN (
                 'started', 'active', 'paused', 'interrupted', 'resumed'
             )
-              AND origin IN ('time_machine', 'recovery')
+              AND origin IN ('time_machine', 'recovery', 'study_builder')
             ORDER BY last_active_at DESC, started_at DESC, rowid DESC LIMIT 1
             """
         )
@@ -160,7 +160,7 @@ class SessionRepository:
             WHERE status IN (
                 'started', 'active', 'paused', 'interrupted', 'resumed'
             )
-              AND origin IN ('time_machine', 'recovery')
+              AND origin IN ('time_machine', 'recovery', 'study_builder')
               AND deck_id = ? AND deck_name = ?
             ORDER BY last_active_at DESC, started_at DESC, rowid DESC LIMIT 1
             """,
@@ -174,7 +174,7 @@ class SessionRepository:
                 connection.execute(
                     """
                     SELECT * FROM sessions
-                    WHERE origin IN ('time_machine', 'recovery')
+            WHERE origin IN ('time_machine', 'recovery', 'study_builder')
                     ORDER BY started_at, rowid
                     LIMIT ?
                     """,

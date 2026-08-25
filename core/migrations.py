@@ -282,4 +282,45 @@ MIGRATIONS = (
             """,
         ),
     ),
+    Migration(
+        version=8,
+        name="study_builder_recipes",
+        statements=(
+            """
+            CREATE TABLE IF NOT EXISTS study_recipes (
+                recipe_id TEXT PRIMARY KEY,
+                collection_key TEXT NOT NULL,
+                name TEXT NOT NULL,
+                definition_json TEXT NOT NULL,
+                created_at INTEGER NOT NULL,
+                updated_at INTEGER NOT NULL,
+                last_run_at INTEGER
+            )
+            """,
+            """
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_study_recipes_collection_name
+            ON study_recipes(collection_key, name COLLATE NOCASE)
+            """,
+            """
+            CREATE INDEX IF NOT EXISTS idx_study_recipes_collection_recent
+            ON study_recipes(collection_key, last_run_at DESC, updated_at DESC)
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS study_builder_recent (
+                run_id TEXT PRIMARY KEY,
+                collection_key TEXT NOT NULL,
+                recipe_id TEXT,
+                definition_json TEXT NOT NULL,
+                metadata_json TEXT NOT NULL DEFAULT '{}',
+                created_at INTEGER NOT NULL,
+                FOREIGN KEY(recipe_id) REFERENCES study_recipes(recipe_id)
+                    ON DELETE SET NULL
+            )
+            """,
+            """
+            CREATE INDEX IF NOT EXISTS idx_study_builder_recent_collection
+            ON study_builder_recent(collection_key, created_at DESC)
+            """,
+        ),
+    ),
 )

@@ -260,6 +260,7 @@ class SessionTrackingModule:
         if current.origin in {
             SessionOrigin.RECOVERY,
             SessionOrigin.TIME_MACHINE,
+            SessionOrigin.STUDY_BUILDER,
         }:
             self._manager.interrupt()
             return

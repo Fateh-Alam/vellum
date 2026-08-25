@@ -47,7 +47,7 @@ class ResumeModule:
         self._action: Any | None = None
         self._running = False
         self._prompted = False
-        self._unsubscribe: Callable[[], None] | None = None
+        self._unsubscribe: list[Callable[[], None]] = []
         self._events = events
         self._generated_decks = generated_decks
         self._activity = activity
@@ -64,8 +64,20 @@ class ResumeModule:
         self._action.setEnabled(True)
         self._running = True
         if self._events is not None:
-            self._unsubscribe = self._events.subscribe(
-                "resume_requested", lambda: self.request_resume(False)
+            self._unsubscribe.extend(
+                (
+                    self._events.subscribe(
+                        "resume_requested", lambda: self.request_resume(False)
+                    ),
+                    self._events.subscribe(
+                        "generated_session_finish_requested",
+                        self.finish_latest_generated,
+                    ),
+                    self._events.subscribe(
+                        "generated_session_abandon_requested",
+                        self.abandon_latest_generated,
+                    ),
+                )
             )
         config = self._config()
         ramp_owns_launch = bool(
@@ -86,9 +98,9 @@ class ResumeModule:
             self._action.setEnabled(False)
         self._running = False
         self._prompted = False
-        if self._unsubscribe is not None:
-            self._unsubscribe()
-            self._unsubscribe = None
+        for unsubscribe in self._unsubscribe:
+            unsubscribe()
+        self._unsubscribe.clear()
 
     def _install_action(self) -> None:
         if self._action is not None:
@@ -181,6 +193,7 @@ class ResumeModule:
         if session.origin in {
             SessionOrigin.TIME_MACHINE,
             SessionOrigin.RECOVERY,
+            SessionOrigin.STUDY_BUILDER,
         }:
             self._abandon_generated(session)
             return
@@ -192,6 +205,21 @@ class ResumeModule:
     def _abandon_generated(self, session: Session) -> None:
         """End a saved generated session only after its owned deck is gone."""
 
+        self._remove_generated(session, complete=False)
+
+    def finish_latest_generated(self) -> None:
+        session = self._manager.repository.latest_generated_resumable()
+        if session is not None:
+            self._remove_generated(session, complete=True)
+
+    def abandon_latest_generated(self) -> None:
+        session = self._manager.repository.latest_generated_resumable()
+        if session is not None:
+            self._remove_generated(session, complete=False)
+
+    def _remove_generated(self, session: Session, *, complete: bool) -> None:
+        """Remove only an ID/name-matched generated deck, then finalize it."""
+
         if self._generated_decks is None:
             self._warn_generated_cleanup(
                 RuntimeError("generated deck history service is unavailable")
@@ -201,7 +229,7 @@ class ResumeModule:
             self._generated_decks.mark_removed(
                 session.id, reason="already_missing"
             )
-            self._finish_abandon(session.id)
+            self._finish_generated(session.id, complete=complete)
             return
 
         from aqt.operations import QueryOp  # type: ignore[import-not-found]
@@ -225,7 +253,7 @@ class ResumeModule:
                 self._generated_decks.mark_removed(
                     session.id, reason="already_missing"
                 )
-                self._finish_abandon(session.id)
+                self._finish_generated(session.id, complete=complete)
                 return
             if result != "owned":
                 self._warn_generated_cleanup(
@@ -236,9 +264,9 @@ class ResumeModule:
 
             def removed(_changes: Any) -> None:
                 self._generated_decks.mark_removed(
-                    session.id, reason="abandoned"
+                    session.id, reason="finished" if complete else "abandoned"
                 )
-                self._finish_abandon(session.id)
+                self._finish_generated(session.id, complete=complete)
 
             remove_decks(
                 parent=self._mw,
@@ -252,12 +280,19 @@ class ResumeModule:
             self._warn_generated_cleanup
         ).run_in_background()
 
-    def _finish_abandon(self, session_id: str) -> None:
-        self._manager.abandon_saved(session_id)
+    def _finish_generated(self, session_id: str, *, complete: bool) -> None:
+        if complete:
+            self._manager.complete_saved(session_id)
+        else:
+            self._manager.abandon_saved(session_id)
         from aqt.utils import tooltip  # type: ignore[import-not-found]
 
         tooltip(
-            "Previous Vellum session abandoned; temporary deck removed",
+            (
+                "Previous Vellum session finished; temporary deck removed"
+                if complete
+                else "Previous Vellum session abandoned; temporary deck removed"
+            ),
             parent=self._mw,
         )
 

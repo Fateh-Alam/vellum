@@ -12,6 +12,9 @@ Anki-preserved `user_files/` directory. Depending on enabled modules, it stores:
   for session continuity and generated-deck safety;
 - captured topic labels, paths, and raw topic prefixes;
 - generated-deck manifests and lifecycle evidence;
+- collection-scoped Study Builder recipes and recent-run definitions containing
+  only user-authored queries, facet selectors, state/order choices, limits, and
+  timestamps;
 - Mind Note text and handoff text deliberately written by the user;
 - configuration through Anki's supported add-on configuration API.
 
@@ -19,6 +22,8 @@ Anki-preserved `user_files/` directory. Depending on enabled modules, it stores:
 
 - card question or answer text;
 - note fields or media;
+- Study Builder snippets, rendered card content, or extracted sort-field text;
+- Study Builder search matches, aliases, preview-cache entries, or zero-result diagnostic probes;
 - account credentials or API keys;
 - telemetry, analytics, or remote crash reports;
 - any data outside the local Anki add-on area.
@@ -34,3 +39,5 @@ from relevant log lines.
 Settings can clear individual Vellum histories or reset all Vellum-owned data.
 Reset All requires confirmation and never targets Anki-owned collection tables.
 Clearing Mind Notes also removes their text from durable Debrief snapshots.
+Study Builder recipes/recent runs have their own explicit reset and diagnostics
+report only configuration switches—not recipe queries, deck names, or tags.

@@ -1,5 +1,5 @@
 {
-  "config_version": 2,
+  "config_version": 3,
   "enabled": true,
   "onboarding_completed": false,
   "onboarding_version": 0,
@@ -15,7 +15,8 @@
     "mind_notes": true,
     "session_debrief": true,
     "topic_health": false,
-    "home_panel": true
+    "home_panel": true,
+    "study_builder": true
   },
   "general": {
     "show_menu": true,
@@ -116,12 +117,23 @@
     "ask_before_create": true,
     "deck_name_pattern": "Vellum Recovery - {topic}"
   },
+  "study_builder": {
+    "shortcut_enabled": true,
+    "shortcut": "Ctrl+Shift+B",
+    "default_limit": 100,
+    "default_state_preset": "due_new",
+    "default_order": "due",
+    "show_snippets": true,
+    "show_anking_facets": true,
+    "tutorial_version": 0
+  },
   "home": {
     "show_continue": true,
     "show_time_machine": true,
     "show_weak_topics": true,
     "show_estimated_workload": true,
-    "show_greeting": true
+    "show_greeting": true,
+    "show_study_builder": true
   },
   "topic_parsing": {
     "preferred_roots": ["#FirstAid", "#Pathoma", "#B&B", "#Sketchy", "#Systems"],

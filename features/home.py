@@ -194,6 +194,8 @@ class HomeModule:
             "resume": resume_payload,
             "showTimeMachine": config.home.show_time_machine
             and config.modules.time_machine,
+            "showStudyBuilder": config.home.show_study_builder
+            and config.modules.study_builder,
             "presets": list(config.time_machine.presets_minutes),
             "showAttention": config.home.show_weak_topics
             and config.modules.topic_health,
@@ -220,6 +222,9 @@ class HomeModule:
             return handled
         if message == "vellum:home:resume":
             self._events.emit("resume_requested")
+            return (True, None)
+        if message == "vellum:home:builder":
+            self._events.emit("study_builder_open_requested")
             return (True, None)
         prefix = "vellum:home:time:"
         if message.startswith(prefix):

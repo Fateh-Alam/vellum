@@ -15,7 +15,9 @@ class ConfigTests(unittest.TestCase):
         self.assertTrue(config.modules.mind_notes)
         self.assertTrue(config.modules.session_debrief)
         self.assertFalse(config.modules.topic_health)
-        self.assertEqual(config.config_version, 2)
+        self.assertEqual(config.config_version, 3)
+        self.assertTrue(config.modules.study_builder)
+        self.assertEqual(config.study_builder.default_limit, 100)
         self.assertTrue(config.general.keyboard_shortcuts)
         self.assertEqual(config.topic_parsing.preferred_roots[0], "#FirstAid")
         self.assertEqual(config.context.collapse_shortcut, "Escape")
@@ -30,7 +32,7 @@ class ConfigTests(unittest.TestCase):
         config = VellumConfig.from_mapping(
             {"config_version": 1, "onboarding_completed": True}
         )
-        self.assertEqual(config.config_version, 2)
+        self.assertEqual(config.config_version, 3)
         self.assertTrue(config.onboarding_completed)
         self.assertEqual(config.onboarding_version, 1)
         self.assertEqual(config.onboarding_invitation_version, 0)

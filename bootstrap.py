@@ -21,12 +21,14 @@ from .features.resume import ResumeModule
 from .features.recovery import RecoveryModule
 from .features.return_ramp import ReturnRampModule
 from .features.session_tracking import SessionTrackingModule
+from .features.study_builder import StudyBuilderModule
 from .features.time_machine import TimeMachineModule
 from .features.topic_health import TopicHealthModule
 from .sessions.manager import SessionManager
 from .sessions.generated_decks import GeneratedDeckHistoryRepository
 from .sessions.debrief import DebriefRepository
 from .sessions.repository import SessionRepository
+from .builder.repository import StudyRecipeRepository
 from .continuity.activity import ActivityRepository
 from .notes.repository import MindNoteRepository
 from .topics.cache import TopicPathCache
@@ -40,6 +42,7 @@ from .timing.repository import TimingRepository
 FEATURE_NAMES = (
     "context",
     "recovery",
+    "study_builder",
     "time_machine",
     "hud",
     "return_ramp",
@@ -63,6 +66,7 @@ class VellumServices:
     topics: TopicService
     sessions: SessionManager
     generated_decks: GeneratedDeckHistoryRepository
+    study_recipes: StudyRecipeRepository
     activity: ActivityRepository
     mind_notes: MindNoteRepository
     debriefs: DebriefRepository
@@ -92,6 +96,7 @@ class VellumApplication:
         return replace(
             config.modules,
             recovery=False,
+            study_builder=False,
             time_machine=False,
             hud=False,
             resume=False,
@@ -215,6 +220,7 @@ def bootstrap(package_name: str, addon_root: Path) -> VellumApplication | None:
             ),
         )
         generated_decks = GeneratedDeckHistoryRepository(database)
+        study_recipes = StudyRecipeRepository(database)
         activity = ActivityRepository(database)
         mind_notes = MindNoteRepository(database)
         debriefs = DebriefRepository(database)
@@ -344,6 +350,22 @@ def bootstrap(package_name: str, addon_root: Path) -> VellumApplication | None:
                         logger=logger,
                     )
                 )
+            elif feature_name == "study_builder":
+                modules.register(
+                    StudyBuilderModule(
+                        package_name=package_name,
+                        mw=mw,
+                        manager=sessions,
+                        tracking=tracking,
+                        timing=timing,
+                        config=config_store.load,
+                        save_config=config_store.save,
+                        events=events,
+                        generated_decks=generated_decks,
+                        recipes=study_recipes,
+                        logger=logger,
+                    )
+                )
             elif feature_name == "hud":
                 modules.register(
                     HudModule(
@@ -377,19 +399,20 @@ def bootstrap(package_name: str, addon_root: Path) -> VellumApplication | None:
         app = VellumApplication(
             package_name=package_name,
             services=VellumServices(
-                config_store,
-                database,
-                events,
-                modules,
-                topics,
-                sessions,
-                generated_decks,
-                activity,
-                mind_notes,
-                debriefs,
-                timing,
-                persistence_available,
-                user_data,
+                config_store=config_store,
+                database=database,
+                events=events,
+                modules=modules,
+                topics=topics,
+                sessions=sessions,
+                generated_decks=generated_decks,
+                study_recipes=study_recipes,
+                activity=activity,
+                mind_notes=mind_notes,
+                debriefs=debriefs,
+                timing=timing,
+                persistence_available=persistence_available,
+                data_dir=user_data,
             ),
         )
         setattr(mw, "_vellum_application", app)

@@ -1,9 +1,9 @@
 {
   "package": "vellum",
   "name": "Vellum",
-  "mod": 1787396177,
-  "human_version": "1.0.0",
+  "mod": 1787610284,
+  "human_version": "1.1.0",
   "homepage": "https://github.com/Fateh-Alam/vellum",
   "min_point_version": 250904,
-  "max_point_version": 250904
+  "max_point_version": 260500
 }

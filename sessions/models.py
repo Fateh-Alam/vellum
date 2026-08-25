@@ -21,6 +21,7 @@ class SessionOrigin(str, Enum):
     NORMAL = "normal"
     TIME_MACHINE = "time_machine"
     RECOVERY = "recovery"
+    STUDY_BUILDER = "study_builder"
     RESUMED = "resumed"
 
 

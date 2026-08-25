@@ -647,6 +647,20 @@
       root.appendChild(block);
     }
 
+    if (payload.showStudyBuilder) {
+      const block = node("section", "vellum-home__card");
+      block.appendChild(node("div", "vellum-home__eyebrow", "BUILD BY TOPIC OR TAG"));
+      block.appendChild(node("h3", "", "Study Builder"));
+      block.appendChild(
+        node("p", "vellum-home__muted", "Inspect exact matches before creating a temporary scheduled-study deck.")
+      );
+      const button = node("button", "vellum-home__action", "Build Study Deck →");
+      button.type = "button";
+      button.addEventListener("click", function () { send("vellum:home:builder"); });
+      block.appendChild(button);
+      root.appendChild(block);
+    }
+
     if (payload.showAttention && payload.attention.length) {
       const block = node("section", "vellum-home__card");
       block.appendChild(node("div", "vellum-home__eyebrow", "NEEDS ATTENTION"));
