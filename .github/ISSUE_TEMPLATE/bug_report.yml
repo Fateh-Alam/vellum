@@ -34,7 +34,7 @@ body:
     id: anki_version
     attributes:
       label: Anki version
-      placeholder: 26.5
+      placeholder: "26.5"
     validations:
       required: true
   - type: input
@@ -68,4 +68,3 @@ body:
       options:
         - label: I checked this report and removed card content, Mind Notes, collection files, and private paths.
           required: true
-
