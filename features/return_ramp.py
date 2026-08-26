@@ -1,4 +1,4 @@
-"""Configurable absence-aware re-entry over Time Machine and Resume."""
+"""Configurable absence-aware re-entry over Study by Time and Resume."""
 
 from __future__ import annotations
 

@@ -2,8 +2,11 @@
 
 All notable public changes to Vellum are recorded here.
 
-## Unreleased
+## 1.1.1 — 2026-08-26
 
+- Renamed the user-facing **Time Machine** feature to **Study by Time** so its
+  purpose is clear. Existing settings, recipes, session origins, and stored
+  history continue to use the compatible internal `time_machine` identifier.
 - Added a detailed public walkthrough with real interface captures, a plain-
   language explanation of Study Builder, explicit collection-safety boundaries,
   installation help, and responsive media that preserves its full aspect ratio.

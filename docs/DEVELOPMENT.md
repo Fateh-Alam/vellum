@@ -1,7 +1,7 @@
 # Development and release checks
 
 Vellum supports Python 3.10+ at the source boundary and targets Anki 25.09.4 or
-newer for the 1.1.0 release.
+newer for the 1.1.1 release.
 
 Run from the repository root:
 
@@ -44,4 +44,4 @@ The public release boundary is:
 
 - macOS + Anki 25.9.4 and 26.5: locally qualified candidate workflows;
 - Windows: source-compatible, real Windows 11 matrix pending;
-- Linux: not live-qualified for 1.1.0.
+- Linux: not live-qualified for 1.1.1.

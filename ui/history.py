@@ -61,7 +61,7 @@ def history_details_html(
             "</tr>"
         )
 
-    feature = "Time Machine" if history.feature == "time_machine" else "Recovery"
+    feature = "Study by Time" if history.feature == "time_machine" else "Recovery"
     removed = (
         f"{_when(history.removed_at)} ({history.removal_reason})"
         if history.removed_at is not None
@@ -141,7 +141,7 @@ def show_generated_deck_history(parent: Any, repository: Any) -> None:
     title.setStyleSheet("font-size: 20px; font-weight: 650;")
     layout.addWidget(title)
     intro = QLabel(
-        "Every Time Machine and Recovery deck is recorded from creation onward. "
+        "Every Study by Time and Recovery deck is recorded from creation onward. "
         "Its complete manifest remains after the temporary deck is removed; "
         "card text is never copied."
     )
@@ -161,11 +161,11 @@ def show_generated_deck_history(parent: Any, repository: Any) -> None:
     if not histories:
         details.setHtml(
             "<h2>No generated decks yet</h2>"
-            "<p>Your completed Time Machine and Recovery sessions will appear here.</p>"
+            "<p>Your completed Study by Time and Recovery sessions will appear here.</p>"
         )
     else:
         for history in histories:
-            feature = "Time Machine" if history.feature == "time_machine" else "Recovery"
+            feature = "Study by Time" if history.feature == "time_machine" else "Recovery"
             sessions.addItem(
                 f"{feature} · {_when(history.created_at)}\n"
                 f"{history.planned_card_count} cards · {history.status.title()}"

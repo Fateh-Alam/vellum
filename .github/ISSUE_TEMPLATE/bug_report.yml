@@ -41,7 +41,7 @@ body:
     id: vellum_version
     attributes:
       label: Vellum version
-      placeholder: 1.1.0
+      placeholder: 1.1.1
     validations:
       required: true
   - type: dropdown

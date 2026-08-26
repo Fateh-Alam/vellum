@@ -34,7 +34,7 @@ HELP_SECTIONS = (
         <ol><li>Open any deck and begin reviewing.</li>
         <li>Use Context when you need the larger topic hierarchy.</li>
         <li>Use Recovery when one failed card reveals a broader gap.</li>
-        <li>Use Time Machine when your available time is the real constraint.</li>
+        <li>Use Study by Time when your available time is the real constraint.</li>
         <li>Use Study Builder when topics, tags, or a deck scope define the work.</li></ol>
         """,
     ),
@@ -45,7 +45,7 @@ HELP_SECTIONS = (
         <h2>Context</h2><p>A compact, optional topic layer inside Reviewer.</p>
         <h2>Recovery</h2><p>Select a hierarchy level and create a transparent,
         temporary filtered deck. Anki remains responsible for scheduling.</p>
-        <h2>Time Machine</h2><p>Choose a duration and deck scope. Vellum estimates a
+        <h2>Study by Time</h2><p>Choose a duration and deck scope. Vellum estimates a
         bounded queue from your local pace and safe fallbacks.</p>
         <h2>Study Builder</h2><p>Open it from <strong>Builder</strong> in Anki's
         top navigation bar. Choose <strong>Find Topics</strong> to select one or

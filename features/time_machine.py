@@ -36,7 +36,7 @@ from .session_tracking import SessionTrackingModule
 
 
 def time_target_reached(session: Session, now: int | None = None) -> bool:
-    """Return true only for a live Time Machine session at or past its target."""
+    """Return true only for a live Study by Time session at or past its target."""
 
     if (
         session.origin is not SessionOrigin.TIME_MACHINE
@@ -118,7 +118,7 @@ class TimeMachineModule:
             enabled=full_config.general.keyboard_shortcuts
             and config.shortcut_enabled,
             logger=self._logger,
-            feature_name="Time Machine",
+            feature_name="Study by Time",
         )
         self._action.setEnabled(True)
         self._unsubscribe.append(
@@ -151,7 +151,7 @@ class TimeMachineModule:
             return
         from aqt.qt import QAction, qconnect  # type: ignore[import-not-found]
 
-        self._action = QAction("Start Vellum Time Machine…", self._mw)
+        self._action = QAction("Plan a Timed Session…", self._mw)
         qconnect(self._action.triggered, self.open)
         self._mw.addAction(self._action)
 
@@ -197,8 +197,8 @@ class TimeMachineModule:
             '<section id="vellum-overview" class="vellum-overview" data-theme="'
             + config.general.theme
             + '" '
-            'aria-label="Vellum Time Machine">'
-            '<div class="vellum-overview__copy"><strong>Time Machine</strong>'
+            'aria-label="Vellum Study by Time">'
+            '<div class="vellum-overview__copy"><strong>Study by Time</strong>'
             '<span id="vellum-overview-estimate">Plan all decks around your time.</span>'
             '</div><div class="vellum-overview__presets">'
             + buttons
@@ -232,11 +232,11 @@ class TimeMachineModule:
                     + "');"
                 )
             except Exception:
-                self._logger.debug("Deck Overview unavailable for Time Machine estimate")
+                self._logger.debug("Deck Overview unavailable for Study by Time estimate")
 
         QueryOp(parent=self._mw, op=collect, success=success).failure(
             lambda error: self._logger.warning(
-                "Time Machine deck estimate unavailable: %s", error
+                "Study by Time deck estimate unavailable: %s", error
             )
         ).run_in_background()
 
@@ -296,7 +296,7 @@ class TimeMachineModule:
         ).failure(self._deck_selection_failed).run_in_background()
 
     def _deck_selection_failed(self, error: Exception) -> None:
-        self._logger.warning("Time Machine deck selection unavailable: %s", error)
+        self._logger.warning("Study by Time deck selection unavailable: %s", error)
         from aqt.utils import showWarning  # type: ignore[import-not-found]
 
         showWarning(
@@ -379,7 +379,7 @@ class TimeMachineModule:
     ) -> None:
         """Degrade to the configured static review rate without blocking study."""
 
-        self._logger.warning("Time Machine queue estimate failed: %s", error)
+        self._logger.warning("Study by Time queue estimate failed: %s", error)
         seconds_per_card = self._config().time_machine.fallback_seconds.review
         expected = max(1, int(minutes * 60 / seconds_per_card))
         estimate = SessionEstimate(
@@ -455,7 +455,7 @@ class TimeMachineModule:
                     )
                 except Exception as error:
                     self._logger.exception(
-                        "Unable to create Time Machine history manifest"
+                        "Unable to create Study by Time history manifest"
                     )
                     self._manager.abandon_saved(session.id)
                     self._discard_unstarted_deck(deck, error)
@@ -464,7 +464,7 @@ class TimeMachineModule:
                 from aqt.utils import tooltip  # type: ignore[import-not-found]
 
                 tooltip(
-                    f"Time Machine · {deck.card_count} cards · {scope_label}",
+                    f"Study by Time · {deck.card_count} cards · {scope_label}",
                     parent=self._mw,
                 )
                 self._mw.moveToState("review")
@@ -516,7 +516,7 @@ class TimeMachineModule:
         ).run_in_background()
 
     def _start_failed(self, error: Exception) -> None:
-        self._logger.warning("Time Machine start failed: %s", error)
+        self._logger.warning("Study by Time start failed: %s", error)
         from aqt.utils import showWarning  # type: ignore[import-not-found]
 
         showWarning(
@@ -554,18 +554,18 @@ class TimeMachineModule:
         ).run_in_background()
 
     def _cleanup_failed(self, error: Exception) -> None:
-        self._logger.error("Time Machine cleanup failed: %s", error)
+        self._logger.error("Study by Time cleanup failed: %s", error)
         from aqt.utils import showWarning  # type: ignore[import-not-found]
 
         showWarning(
-            "Vellum could not safely remove its temporary Time Machine deck. "
+            "Vellum could not safely remove its temporary Study by Time deck. "
             "Do not delete similarly named decks manually; reopen Vellum and use "
             "Finish Current Session. " + str(error),
             parent=self._mw,
         )
 
     def finish_current(self) -> None:
-        """Return remaining Time Machine cards home and abandon the live session."""
+        """Return remaining timed-session cards home and abandon the live session."""
 
         session = self._manager.current
         if (
@@ -576,12 +576,12 @@ class TimeMachineModule:
         ):
             from aqt.utils import tooltip  # type: ignore[import-not-found]
 
-            tooltip("No active Time Machine session", parent=self._mw)
+            tooltip("No active Study by Time session", parent=self._mw)
             return
         from aqt.utils import askUser  # type: ignore[import-not-found]
 
         if not askUser(
-            "Finish this Time Machine session? Remaining cards will return to "
+            "Finish this timed session? Remaining cards will return to "
             "their home decks, and answered-card scheduling will be preserved.",
             parent=self._mw,
         ):
@@ -627,7 +627,7 @@ class TimeMachineModule:
             if not owned:
                 if not only_if_empty:
                     self._start_failed(
-                        RuntimeError("saved Time Machine deck identity no longer matches")
+                        RuntimeError("saved Study by Time deck identity no longer matches")
                     )
                 return
             from aqt.operations.deck import remove_decks  # type: ignore[import-not-found]
@@ -695,7 +695,7 @@ class TimeMachineModule:
 
             choice = QMessageBox.question(
                 self._mw,
-                "Vellum Time Machine",
+                "Vellum Study by Time",
                 "Time’s up, and the current card is complete. Finish this "
                 "Vellum session now?",
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,

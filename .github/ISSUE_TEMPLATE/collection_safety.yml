@@ -32,7 +32,7 @@ body:
     id: versions
     attributes:
       label: Anki, Vellum, and operating-system versions
-      placeholder: Anki 26.5, Vellum 1.1.0, macOS 15.x
+      placeholder: Anki 26.5, Vellum 1.1.1, macOS 15.x
     validations:
       required: true
   - type: checkboxes
@@ -42,4 +42,3 @@ body:
       options:
         - label: I checked this report and removed card content, Mind Notes, collection files, and private paths.
           required: true
-

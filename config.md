@@ -12,7 +12,7 @@ Use **Vellum → Settings…** for the structured settings window. It includes:
   version, and independent module switch. Saved recipes retain the chosen
   workflow, exact topic tags, source decks, sibling avoidance, and due/new
   composition;
-- Time Machine presets, adaptive timing, fallbacks, deck Overview entry, every
+- Study by Time presets, adaptive timing, fallbacks, deck Overview entry, every
   HUD metric/placement, and end behavior;
 - Resume checkpoints, inactivity, staleness, history retention, and Home blocks;
 - Return Ramp launch behavior, number of suggestions, and any positive
@@ -35,7 +35,7 @@ Default portable shortcuts are **C** for Context, **Shift+C** for Recovery,
 **Ctrl+Shift+B** for Study Builder, **Alt+B** for Backtrack, and **Alt+M** for Mind Notes. Vellum stores portable Qt
 sequences but displays `QKeySequence` NativeText: macOS may show symbols while
 Windows shows native Alt/Ctrl labels.
-Time Machine uses **Ctrl+Shift+T** because Anki 25.9.4 owns plain `T`; Vellum
+Study by Time uses **Ctrl+Shift+T** because Anki 25.9.4 owns plain `T`; Vellum
 still detects and disables any runtime conflict rather than overriding it.
 
 Configuration schema version 3 adds Study Builder while continuing to track

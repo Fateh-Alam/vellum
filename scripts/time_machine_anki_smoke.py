@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exercise collection-wide Time Machine against a disposable Anki collection."""
+"""Exercise collection-wide Study by Time against a disposable Anki collection."""
 
 from __future__ import annotations
 
@@ -39,7 +39,7 @@ def main() -> None:
             deck_a = int(collection.decks.id("Alpha"))
             deck_b = int(collection.decks.id("Beta"))
             empty = int(collection.decks.id("Empty::Leaf"))
-            collection.decks.id("Vellum Time Machine - 30 min")
+            collection.decks.id("Vellum Study by Time - 30 min")
             home_by_card: dict[int, int] = {}
 
             for deck_id, count in ((deck_a, 3), (deck_b, 3)):
@@ -76,7 +76,7 @@ def main() -> None:
             assert choice_counts["Beta"] == 3
             assert choice_counts["Empty"] == 0
             assert choice_counts["Default"] == 0
-            assert choice_counts["Vellum Time Machine - 30 min"] == 0
+            assert choice_counts["Vellum Study by Time - 30 min"] == 0
             selected_snapshot = collect_selected_deck_queue(
                 collection,
                 (deck_a,),
@@ -116,7 +116,7 @@ def main() -> None:
             time_deck = create_time_machine_deck(
                 collection, snapshot, minutes=30
             )
-            assert time_deck.deck_name == "Vellum Time Machine - 30 min (2)"
+            assert time_deck.deck_name == "Vellum Study by Time - 30 min (2)"
             assert time_deck.card_count == 6
             assert collection.decks.is_filtered(time_deck.deck_id)
             assert all(

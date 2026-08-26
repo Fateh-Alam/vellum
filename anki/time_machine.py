@@ -1,4 +1,4 @@
-"""Collection-wide native queue snapshots and temporary Time Machine decks."""
+"""Collection-wide native queue snapshots and temporary timed-study decks."""
 
 from __future__ import annotations
 
@@ -186,7 +186,7 @@ def collect_all_deck_queue(
 
 
 def unique_time_machine_deck_name(collection: Any, requested: str) -> str:
-    candidate = requested.strip() or "Vellum Time Machine"
+    candidate = requested.strip() or "Vellum Study by Time"
     if collection.decks.id_for_name(candidate) is None:
         return candidate
     suffix = 2
@@ -212,7 +212,7 @@ def create_time_machine_deck(
     from anki.decks import FilteredDeckConfig  # type: ignore[import-not-found]
 
     name = unique_time_machine_deck_name(
-        collection, f"Vellum Time Machine - {minutes} min"
+        collection, f"Vellum Study by Time - {minutes} min"
     )
     deck = collection.sched.get_or_create_filtered_deck(0)
     deck.name = name
@@ -232,7 +232,7 @@ def create_time_machine_deck(
         rebuilt = collection.sched.rebuild_filtered_deck(deck_id)
         card_count = int(rebuilt.count)
         if card_count <= 0:
-            raise ValueError("Cards became unavailable before Time Machine started")
+            raise ValueError("Cards became unavailable before Study by Time started")
         bucket_by_card = {
             int(card_id): bucket.value
             for card_id, bucket in zip(snapshot.card_ids, snapshot.buckets)
@@ -244,7 +244,7 @@ def create_time_machine_deck(
             buckets=bucket_by_card,
         )
         if len(cards) != card_count:
-            raise ValueError("Unable to capture the complete Time Machine deck history")
+            raise ValueError("Unable to capture the complete Study by Time deck history")
     except Exception:
         if (
             deck_id

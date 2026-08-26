@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#f4efe5">
   <meta name="description" content="Vellum is a local-first Anki Desktop add-on that helps medical students build focused study sessions from topics, tags, decks, and available time without replacing Anki or FSRS.">
   <meta property="og:title" content="Vellum for Anki — Build a filtered deck without fighting the Browser">
-  <meta property="og:description" content="A visual, plain-language tour of Study Builder, Recovery, Time Machine, Resume, and Vellum's collection-safety model.">
+  <meta property="og:description" content="A visual, plain-language tour of Study Builder, Recovery, Study by Time, Resume, and Vellum's collection-safety model.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://fateh-alam.github.io/vellum/">
   <meta property="og:image" content="https://fateh-alam.github.io/vellum/assets/og-card.png">
@@ -22,8 +22,8 @@
     "name": "Vellum for Anki",
     "applicationCategory": "EducationalApplication",
     "operatingSystem": "Anki Desktop on macOS",
-    "softwareVersion": "1.1.0",
-    "description": "A local-first study-continuity add-on for Anki Desktop with a guided Study Builder, Recovery, Time Machine, Resume, Mind Notes, and Session Debrief.",
+    "softwareVersion": "1.1.1",
+    "description": "An Anki Desktop add-on with a guided Study Builder, Recovery, Study by Time, Resume, Mind Notes, and Session Debrief.",
     "downloadUrl": "https://ankiweb.net/shared/info/226947964",
     "codeRepository": "https://github.com/Fateh-Alam/vellum"
   }
@@ -53,7 +53,7 @@
   <main id="main">
     <section class="hero" id="top">
       <div class="hero-copy reveal">
-        <p class="eyebrow"><span class="status-dot"></span> Anki Desktop add-on · version 1.1.0</p>
+        <p class="eyebrow"><span class="status-dot"></span> Anki Desktop add-on · version 1.1.1</p>
         <h1>Make the filtered deck you want without fighting the <em>Browser.</em></h1>
         <p class="hero-lead">Say you want renal cards from First Aid and Pathoma, but only from AnKing. Vellum walks you through that in three screens, shows the cards it found, then lets Anki handle the studying.</p>
         <div class="hero-actions">
@@ -266,7 +266,7 @@
       <div class="feature-grid">
         <article class="feature reveal" data-feature="context"><span>01</span><h3>Context</h3><p>Shows the topic path for the card you are reviewing. Useful when a fact makes more sense once you know which system or chapter it came from.</p></article>
         <article class="feature reveal" data-feature="recovery"><span>02</span><h3>Recovery</h3><p>Builds a short session for a topic that went badly. You can choose Quick, Standard, Full, or a custom size.</p></article>
-        <article class="feature reveal" data-feature="time"><span>03</span><h3>Time Machine</h3><p>Tell Vellum how many minutes you have and which deck groups are allowed. It estimates a queue from your local answer times.</p></article>
+        <article class="feature reveal" data-feature="time"><span>03</span><h3>Study by Time</h3><p>Tell Vellum how many minutes you have and which deck groups are allowed. It estimates a queue from your local answer times.</p></article>
         <article class="feature reveal" data-feature="resume"><span>04</span><h3>Resume + Return Ramp</h3><p>Resume an interrupted Vellum deck, or pick a smaller first session after several days away.</p></article>
         <article class="feature reveal" data-feature="notes"><span>05</span><h3>Mind Notes</h3><p>Write a private thought for your future self—such as “compare distal vs proximal RTA”—and see it when the topic returns.</p></article>
         <article class="feature reveal" data-feature="debrief"><span>06</span><h3>Session Debrief</h3><p>Shows how many cards you did, active time, answer ratings, and the topics where Again and Hard answers clustered. It is a session report, not a mastery score.</p></article>
@@ -330,10 +330,10 @@
     <section class="evidence-section section" id="evidence">
       <div class="section-heading narrow reveal">
         <p class="eyebrow">Testing</p>
-        <h2>What I tested before publishing v1.1.0.</h2>
+        <h2>What I tested before publishing v1.1.1.</h2>
       </div>
       <div class="evidence-grid">
-        <article class="reveal"><strong>162</strong><span>unit tests in the v1.1.0 qualification run</span></article>
+        <article class="reveal"><strong>162</strong><span>unit tests in the v1.1.1 qualification run</span></article>
         <article class="reveal"><strong>50,000</strong><span>tag performance fixture for local-index search</span></article>
         <article class="reveal"><strong>2</strong><span>qualified macOS Anki lines: 25.9.4 and 26.5</span></article>
         <article class="reveal"><strong>0</strong><span>telemetry, cloud services, or copied card-text fields</span></article>
@@ -350,7 +350,7 @@
         <div>
           <p class="eyebrow">Install</p>
           <h2>Install it from AnkiWeb.</h2>
-          <p>Vellum 1.1.0 targets Anki Desktop 25.09.4 or newer. The current public qualification evidence is macOS-specific.</p>
+          <p>Vellum 1.1.1 targets Anki Desktop 25.09.4 or newer. The current public qualification evidence is macOS-specific.</p>
         </div>
         <ol>
           <li><span>1</span><p>In Anki Desktop, open <strong>Tools → Add-ons → Get Add-ons…</strong></p></li>

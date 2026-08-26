@@ -257,7 +257,7 @@ def show_debrief_history(
     ordered: list[tuple[str, str]] = []
     for item in debriefs:
         source = {
-            "time_machine": "Time Machine",
+            "time_machine": "Study by Time",
             "recovery": "Recovery",
             "normal": "Regular study",
         }.get(item.origin, "Study session")

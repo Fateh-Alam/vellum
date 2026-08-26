@@ -35,7 +35,7 @@ body:
       options:
         - Study Builder
         - Recovery / Backtrack
-        - Time Machine / Return Ramp
+        - Study by Time / Return Ramp
         - Review screen / HUD
         - Mind Notes
         - Session Debrief
@@ -53,4 +53,3 @@ body:
       options:
         - label: I removed private card content, Mind Notes, collection files, and personal paths from this request.
           required: true
-

@@ -131,7 +131,7 @@ class SessionTests(unittest.TestCase):
     def test_generated_resume_is_found_even_after_newer_normal_session(self) -> None:
         generated = self.manager.start(
             deck_id=7,
-            deck_name="Vellum Time Machine",
+            deck_name="Vellum Study by Time",
             origin=SessionOrigin.TIME_MACHINE,
         )
         self.manager.interrupt()
@@ -142,7 +142,7 @@ class SessionTests(unittest.TestCase):
         self.assertEqual(self.repo.latest_resumable().id, normal.id)
         self.assertEqual(self.repo.latest_generated_resumable().id, generated.id)
         self.assertEqual(
-            self.repo.generated_resumable_for_deck(7, "Vellum Time Machine").id,
+            self.repo.generated_resumable_for_deck(7, "Vellum Study by Time").id,
             generated.id,
         )
         self.assertEqual(

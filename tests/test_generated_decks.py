@@ -24,7 +24,7 @@ class GeneratedDeckHistoryTests(unittest.TestCase):
         self.history = GeneratedDeckHistoryRepository(self.database)
         self.session = self.sessions.start(
             deck_id=77,
-            deck_name="Vellum Time Machine - 10 min",
+            deck_name="Vellum Study by Time - 10 min",
             query="all-decks",
             target_seconds=600,
             origin=SessionOrigin.TIME_MACHINE,
@@ -135,7 +135,7 @@ class GeneratedDeckHistoryTests(unittest.TestCase):
             @staticmethod
             def name_if_exists(deck_id: int):
                 return (
-                    "Vellum Time Machine - 10 min" if deck_id == 77 else None
+                    "Vellum Study by Time - 10 min" if deck_id == 77 else None
                 )
 
             def remove(self, deck_ids: list[int]) -> None:

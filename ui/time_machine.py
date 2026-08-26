@@ -1,4 +1,4 @@
-"""Time Machine duration and estimate dialogs."""
+"""Study by Time duration and estimate dialogs."""
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ def show_duration_dialog(parent: Any, presets: tuple[int, ...], on_selected: Cal
     )
 
     dialog = QDialog(parent)
-    dialog.setWindowTitle("Time Machine")
+    dialog.setWindowTitle("Study by Time")
     dialog.setMinimumWidth(520)
     layout = QVBoxLayout(dialog)
     title = QLabel("How much time do you have?")
@@ -74,7 +74,7 @@ def show_deck_selection_dialog(
     choices: tuple[TimeMachineDeckChoice, ...],
     on_selected: Callable[[tuple[int, ...]], None],
 ) -> None:
-    """Choose disjoint deck groups for one Time Machine run."""
+    """Choose disjoint deck groups for one Study by Time run."""
 
     from aqt.qt import (  # type: ignore[import-not-found]
         QCheckBox,
@@ -90,7 +90,7 @@ def show_deck_selection_dialog(
     )
 
     dialog = QDialog(parent)
-    dialog.setWindowTitle("Choose Time Machine Decks")
+    dialog.setWindowTitle("Choose Source Decks")
     dialog.setMinimumSize(560, 430)
     layout = QVBoxLayout(dialog)
     title = QLabel(f"Choose decks for {minutes} minutes")
@@ -207,7 +207,7 @@ def show_estimate_dialog(
     )
 
     dialog = QDialog(parent)
-    dialog.setWindowTitle("Time Machine Estimate")
+    dialog.setWindowTitle("Study by Time Estimate")
     layout = QVBoxLayout(dialog)
     heading = QLabel(f"{minutes}-minute session")
     heading.setStyleSheet("font-size: 20px; font-weight: 650;")

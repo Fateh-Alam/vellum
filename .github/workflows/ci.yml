@@ -35,4 +35,4 @@ jobs:
         if: matrix.python == '3.13'
         with:
           name: vellum-ankiaddon
-          path: dist/vellum-1.1.0.ankiaddon
+          path: dist/vellum-1.1.1.ankiaddon

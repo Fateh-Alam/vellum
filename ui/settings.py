@@ -50,7 +50,7 @@ def reset_would_break_active_session(app: Any, tables: tuple[str, ...]) -> bool:
 MODULE_LABELS = {
     "context": ("Context Sidebar", "See the topic hierarchy while reviewing."),
     "recovery": ("Topic Recovery", "Repair a broader gap from the current card."),
-    "time_machine": ("Time Machine", "Plan a realistic session for available time."),
+    "time_machine": ("Study by Time", "Plan a session from the time you have available."),
     "study_builder": (
         "Study Builder",
         "Build scheduled study decks from card text, decks, topics, and tags.",
@@ -154,7 +154,7 @@ def show_settings(
     if not app.services.persistence_available:
         storage_warning = QLabel(
             "Vellum could not open its private database. Context remains available, "
-            "and Backtrack works in memory, but Recovery, Time Machine, HUD, Resume, "
+            "and Backtrack works in memory, but Recovery, Study by Time, HUD, Resume, "
             "Return Ramp, Mind Notes, Topic Health, and Home are disabled for this run."
             " Session Debrief and Study Builder are also unavailable until persistent "
             "storage returns."
@@ -371,7 +371,7 @@ def show_settings(
         time_form.addRow(f"{name.title()} fallback", spin)
     end_behavior = QComboBox()
     _combo(end_behavior, (("Informational timer", "no_stop"), ("Soft notice", "soft_stop"), ("Finish prompt", "alert")), config.time_machine.end_behavior)
-    time_shortcut_enabled = QCheckBox("Enable Time Machine shortcut")
+    time_shortcut_enabled = QCheckBox("Enable Study by Time shortcut")
     time_shortcut_enabled.setChecked(config.time_machine.shortcut_enabled)
     time_shortcut = QLineEdit(config.time_machine.shortcut)
     automatically_start_hud = QCheckBox("Automatically start the HUD")
@@ -449,7 +449,7 @@ def show_settings(
     for field_name, label in (
         ("show_greeting", "Home: greeting"),
         ("show_continue", "Home: Continue block"),
-        ("show_time_machine", "Home: Time Machine block"),
+        ("show_time_machine", "Home: Study by Time block"),
         ("show_study_builder", "Home: Study Builder block"),
         ("show_weak_topics", "Home: topics needing attention"),
         ("show_estimated_workload", "Home: estimated workload"),

@@ -188,7 +188,7 @@ types.
   and local topic evidence.
 - **Recovery** — a Quick, Standard, Full, or Custom topic repair session built
   through Anki's filtered-deck flow.
-- **Time Machine** — choose available time and deck groups; Vellum estimates a
+- **Study by Time** — choose available time and deck groups; Vellum estimates a
   bounded queue using local timing evidence and safe fallbacks.
 - **Session HUD** — quiet progress, active/elapsed time, pace, and ETA during a
   Vellum session.
@@ -234,7 +234,7 @@ AnkiWeb installations are offered updates through Anki's add-on updater.
 
 ### GitHub file
 
-1. Download `vellum-1.1.0.ankiaddon` from the
+1. Download `vellum-1.1.1.ankiaddon` from the
    [latest release](https://github.com/Fateh-Alam/vellum/releases/latest).
 2. Open **Tools → Add-ons → Install from file…**.
 3. Select the file and restart Anki.
@@ -242,9 +242,9 @@ AnkiWeb installations are offered updates through Anki's add-on updater.
 A manually installed GitHub file is not attached to the AnkiWeb listing and must
 be updated manually.
 
-Vellum 1.1.0 targets Anki **25.09.4 or newer** and was locally qualified on macOS
+Vellum 1.1.1 targets Anki **25.09.4 or newer** and was locally qualified on macOS
 with Anki 25.9.4 and 26.5. Native Windows-compatible source is present, but the
-real Windows 11 matrix remains pending. Linux is not live-qualified for 1.1.0.
+real Windows 11 matrix remains pending. Linux is not live-qualified for 1.1.1.
 
 ## First use
 
@@ -259,7 +259,7 @@ offline guide is under **Vellum → Commands & Help…**.
 
 ## Qualification evidence
 
-The v1.1.0 qualification run included:
+The v1.1.1 qualification run included:
 
 - 162 unit tests;
 - Python compilation and Reviewer JavaScript syntax checks;

@@ -33,7 +33,7 @@ class CommandView:
 COMMANDS = (
     CommandDefinition("Context Sidebar", "Show or hide the current topic hierarchy.", "context", "Reviewer", ("context", "shortcut")),
     CommandDefinition("Recover Topic", "Build a temporary repair session from the current topic.", "recovery", "Reviewer", ("recovery", "shortcut")),
-    CommandDefinition("Time Machine", "Plan a bounded session from available time.", "time_machine", "Anywhere", ("time_machine", "shortcut")),
+    CommandDefinition("Study by Time", "Plan a session from the time you have available.", "time_machine", "Anywhere", ("time_machine", "shortcut")),
     CommandDefinition("Study Builder", "Build a scheduled deck by choosing topics and source decks, or decks and their tags.", "study_builder", "Anywhere", ("study_builder", "shortcut")),
     CommandDefinition("Backtrack", "Open the previous card and topic read-only.", "backtrack", "Anywhere", ("backtrack", "shortcut")),
     CommandDefinition("Mind Note", "Save a private thought against the current topic.", "mind_notes", "Anywhere", ("mind_notes", "shortcut")),
@@ -73,7 +73,7 @@ def command_views(config: VellumConfig, mw: Any | None = None) -> tuple[CommandV
                 feature_aliases = {
                     "Context Sidebar": "Context",
                     "Recover Topic": "Recovery",
-                    "Time Machine": "Time Machine",
+                    "Study by Time": "Study by Time",
                     "Study Builder": "Study Builder",
                     "Backtrack": "Backtrack",
                     "Mind Note": "Mind Notes",

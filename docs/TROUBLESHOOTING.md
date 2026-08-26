@@ -15,7 +15,7 @@ tag index, never card text.
 
 ## A generated session is waiting
 
-Use **Resume Last Session** to continue an interrupted Time Machine or Recovery
+Use **Resume Last Session** to continue an interrupted Study by Time or Recovery
 deck, or **Finish Current Session** to return unanswered cards safely. An
 explicitly finished session is terminal and is not presented as resumable.
 

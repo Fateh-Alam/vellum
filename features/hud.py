@@ -1,4 +1,4 @@
-"""Independent, quiet reviewer HUD for normal and Time Machine sessions."""
+"""Independent reviewer HUD for normal and Study by Time sessions."""
 
 from __future__ import annotations
 

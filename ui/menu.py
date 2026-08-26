@@ -27,7 +27,7 @@ def install_vellum_menu(mw: Any, app: Any) -> Any:
         ("Resume Last Session", "resume", "request_resume", "Resume"),
         ("Return Ramp…", "return_ramp", "open", "Return Ramp"),
         ("Build Study Deck…", "study_builder", "open", "Study Builder"),
-        ("Start Time Machine…", "time_machine", "open", "Time Machine"),
+        ("Plan a Timed Session…", "time_machine", "open", "Study by Time"),
         ("Recover Current Topic", "recovery", "open", "Topic Recovery"),
         ("Backtrack…", "backtrack", "open", "Backtrack"),
         ("Add Mind Note…", "mind_notes", "open", "Mind Notes"),
@@ -91,7 +91,7 @@ def install_vellum_menu(mw: Any, app: Any) -> Any:
                 finish_time_machine()
                 return
             showInfo(
-                "Enable Time Machine to safely return its temporary cards.",
+                "Enable Study by Time to safely return its temporary cards.",
                 parent=mw,
             )
             return

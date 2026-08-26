@@ -366,7 +366,7 @@ def main() -> None:
             ended_at=now - 40,
             status=SessionStatus.COMPLETED,
             deck_id=88,
-            deck_name="Vellum Time Machine - 20 min",
+            deck_name="Vellum Study by Time - 20 min",
             query="all-decks",
             target_seconds=1_200,
             origin=SessionOrigin.TIME_MACHINE,
@@ -619,7 +619,7 @@ def main() -> None:
                 break
             time.sleep(0.01)
         if generated_session is None:
-            raise RuntimeError("generated Time Machine session did not reach Reviewer")
+            raise RuntimeError("generated Study by Time session did not reach Reviewer")
         generated_deck_id = int(generated_session.deck_id)
         generated_deck_name = str(generated_session.deck_name)
         for _index in range(2):

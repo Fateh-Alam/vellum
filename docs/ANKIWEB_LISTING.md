@@ -8,7 +8,7 @@ Download code: **226947964**
 
 ## Title
 
-Vellum - Study Builder, Recovery, Time Machine, and Session Tools
+Vellum - Study Builder, Recovery, Study by Time, and Session Tools
 
 ## Tags
 
@@ -223,9 +223,9 @@ proposed cards before using Anki's normal filtered-deck machinery.
 
 ---
 
-## Time Machine
+## Study by Time
 
-Time Machine is for days when the real limit is time.
+Study by Time is for days when the real limit is time.
 
 Choose how many minutes you have and which deck groups are allowed. Vellum uses
 answer-time history stored on your computer to estimate how many cards fit. If
@@ -239,7 +239,7 @@ filtered deck.
 ### How this differs from Anki
 
 Anki can show due counts, limit cards, and report time spent. Its timebox feature
-can also notify you after a chosen period while you are studying. Time Machine
+can also notify you after a chosen period while you are studying. Study by Time
 works before the session: you give it minutes and allowed deck groups, and it
 estimates a card count from your local answer times. It then builds that limited
 queue with Anki rather than creating a separate study system.
@@ -300,7 +300,7 @@ waiting, Return Ramp points you back to Resume or Finish first.
 Anki already shows the backlog in its deck counts and lets you use Custom Study.
 Return Ramp does not hide or reschedule that backlog. It notices that you have
 been away, puts the current review/learning/new workload in one window, and
-offers smaller Time Machine sessions as a starting point.
+offers smaller Study by Time sessions as a starting point.
 
 ---
 
@@ -379,7 +379,7 @@ what you enable, it can show:
 
 - an interrupted session that can be resumed;
 - a shortcut to Study Builder;
-- a Time Machine starting point;
+- a Study by Time starting point;
 - an estimated workload;
 - topics marked by the optional Topic Health rule;
 - your current handoff.
@@ -466,7 +466,7 @@ install, remove, or update Vellum.
 
 ## What Vellum changes in your collection
 
-For Study Builder, Recovery, and Time Machine, Vellum creates a uniquely named
+For Study Builder, Recovery, and Study by Time, Vellum creates a uniquely named
 native Anki filtered deck. It uses rescheduling mode, so answers made inside that
 deck update review history and scheduling in the normal Anki/FSRS way.
 
@@ -546,9 +546,9 @@ connected to the AnkiWeb listing and must be updated manually.
 
 ## Compatibility and testing
 
-Vellum 1.1.0 targets Anki Desktop **25.09.4 or newer**.
+Vellum 1.1.1 targets Anki Desktop **25.09.4 or newer**.
 
-The 1.1.0 release was tested on macOS with Anki 25.9.4 and 26.5. The source has
+The 1.1.1 release was tested on macOS with Anki 25.9.4 and 26.5. The source has
 Windows support, but the full Windows 11 test list has not yet been completed.
 Linux has not been tested live for this release. I do not claim compatibility
 with every third-party add-on.

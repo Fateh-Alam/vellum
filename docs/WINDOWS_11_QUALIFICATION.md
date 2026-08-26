@@ -65,7 +65,7 @@ size where available.
 | Workflow | Required proof | Status |
 |---|---|---|
 | Normal study | Answer events enter Session History without a completion card | Pending |
-| Time Machine exhaustion | Exact owned filtered deck is inspected and removed before terminal persistence and Debrief card | Pending |
+| Study by Time exhaustion | Exact owned filtered deck is inspected and removed before terminal persistence and Debrief card | Pending |
 | Recovery exhaustion | Exact owned filtered deck is inspected and removed before terminal persistence and Debrief card | Pending |
 | Explicit Finish | Remaining cards return safely; Debrief reports the count and offers no false resume | Pending |
 | Interrupted session | Remains a Resume candidate and creates no Debrief | Pending |

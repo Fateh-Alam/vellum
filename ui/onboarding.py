@@ -24,7 +24,7 @@ ONBOARDING_VERSION = 3
 MODULE_COPY = {
     "context": ("Context", "See where the current card belongs."),
     "recovery": ("Recovery", "Repair the broader topic exposed by one card."),
-    "time_machine": ("Time Machine", "Plan by the time you actually have."),
+    "time_machine": ("Study by Time", "Build a session for the time you actually have."),
     "study_builder": (
         "Study Builder",
         "Search one idea, check alternatives, and build a scheduled session.",
@@ -180,7 +180,7 @@ def show_onboarding(mw: Any, app: Any, detected_roots: tuple[str, ...]) -> None:
     for title, copy in (
         ("Know where you are", "Context places a card inside its larger topic."),
         ("Recover the real gap", "Recovery turns one failure into a deliberate topic repair."),
-        ("Plan from available time", "Time Machine builds only the bounded queue you chose."),
+        ("Plan from available time", "Study by Time builds a queue for the minutes you chose."),
         ("Build the exact scope", "Study Builder guides you from topics to decks, or from decks to their tags."),
         ("Leave with meaning", "Debrief records patterns and an optional handoff to your future self."),
     ):
@@ -268,7 +268,7 @@ def show_onboarding(mw: Any, app: Any, detected_roots: tuple[str, ...]) -> None:
     _ready, ready_layout = page(
         "You’re ready",
         "Start with one real workflow. Review normally and open Context when you need "
-        "orientation, Recovery when a broader gap appears, or Time Machine when time is limited.",
+        "orientation, Recovery when a broader gap appears, or Study by Time when time is limited.",
     )
     ready_summary = QLabel()
     ready_summary.setWordWrap(True)
@@ -284,7 +284,7 @@ def show_onboarding(mw: Any, app: Any, detected_roots: tuple[str, ...]) -> None:
     ready_layout.addWidget(paths)
     # Avoid ampersands here: Qt treats them as mnemonic markers, which can turn
     # human labels into platform-specific underscore artifacts.
-    ready_time_machine = QPushButton("Finish, then Start Time Machine")
+    ready_time_machine = QPushButton("Finish, then Plan by Time")
     ready_builder = QPushButton("Finish, then Open Study Builder")
     ready_settings = QPushButton("Finish, then Open Settings")
     ready_help = QPushButton("Finish, then Open Guide")

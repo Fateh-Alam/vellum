@@ -1,4 +1,4 @@
-"""Robust review timing and Time Machine estimation primitives."""
+"""Review timing and Study by Time estimation primitives."""
 
 from .model import TimingModel
 from .models import SessionEstimate, TimingBucket, TimingSummary

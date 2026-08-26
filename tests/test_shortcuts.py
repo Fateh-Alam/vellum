@@ -121,7 +121,7 @@ class ShortcutTests(unittest.TestCase):
                     "T",
                     enabled=True,
                     logger=self.logger,
-                    feature_name="Time Machine",
+                    feature_name="Study by Time",
                 )
                 self.assertFalse(added)
                 self.assertFalse(action.shortcuts())
@@ -136,7 +136,7 @@ class ShortcutTests(unittest.TestCase):
                 "Ctrl+Shift+T",
                 enabled=True,
                 logger=self.logger,
-                feature_name="Time Machine",
+                feature_name="Study by Time",
             )
         self.assertTrue(added)
         self.assertEqual(action.shortcuts(), [FakeKeySequence("Ctrl+Shift+T")])
@@ -152,7 +152,7 @@ class ShortcutTests(unittest.TestCase):
             config, general=replace(config.general, keyboard_shortcuts=False)
         )
         self.assertEqual(
-            next(item for item in command_views(globally_off) if item.name == "Time Machine").status,
+            next(item for item in command_views(globally_off) if item.name == "Study by Time").status,
             "Globally disabled",
         )
         module_off = replace(
