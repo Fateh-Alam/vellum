@@ -163,6 +163,16 @@ Study Builder is not limited to AnKing. It also works with normal decks and
 subdecks, flat tags, hierarchical tags, decks without tags, Basic cards, Cloze
 cards, Image Occlusion cards, and custom note types.
 
+### How this differs from Anki's Browser and filtered decks
+
+Anki already has a powerful search language, a Browser, Custom Study, and native
+filtered decks. Study Builder uses those abilities; it does not replace them.
+What it adds is a guided way to choose topic tags and source decks, a deck-scoped
+tag tree, an availability check, saved rules, and safer temporary-deck cleanup.
+If you already enjoy writing Anki searches by hand, you can keep doing that.
+Vellum is for the cases where finding and combining the right paths is the slow
+part.
+
 ---
 
 ## Context sidebar
@@ -180,6 +190,13 @@ Note, and a button to start Recovery for that topic.
 Context does not use the question or answer text to guess a topic. Topic parsing
 comes from decks, tags, and your configured parsing rules.
 
+### How this differs from Anki
+
+Anki already shows a card's deck and tags in the Browser and Card Info. Context
+does not create new metadata. It keeps the useful part of that existing tag
+hierarchy visible beside the card while you review, and can connect that topic
+to Recovery or a private Mind Note without making you leave the Reviewer.
+
 ---
 
 ## Topic Recovery
@@ -196,6 +213,14 @@ Vellum shows the proposed cards before it builds anything. If you continue, it
 uses Anki's filtered-deck system and normal scheduling. Recovery is for the
 moment when one failed card tells you the gap is larger than that one fact.
 
+### How this differs from Anki
+
+In Anki, you can open the Browser, find the current card's tags, decide how broad
+the topic should be, write a search, and make a filtered deck yourself. Recovery
+starts that process from the card in front of you. Its Quick, Standard, Full,
+and Custom choices decide how wide the topic repair should be, then show the
+proposed cards before using Anki's normal filtered-deck machinery.
+
 ---
 
 ## Time Machine
@@ -211,6 +236,14 @@ The estimate is a planning aid, not a promise that every card will take the same
 number of seconds. The resulting session is still an ordinary scheduled Anki
 filtered deck.
 
+### How this differs from Anki
+
+Anki can show due counts, limit cards, and report time spent. Its timebox feature
+can also notify you after a chosen period while you are studying. Time Machine
+works before the session: you give it minutes and allowed deck groups, and it
+estimates a card count from your local answer times. It then builds that limited
+queue with Anki rather than creating a separate study system.
+
 ---
 
 ## Session HUD
@@ -221,6 +254,13 @@ estimated time remaining.
 
 It is only a display. It does not decide which answer button you should press and
 does not alter intervals.
+
+### How this differs from Anki
+
+Anki already shows basic remaining counts and records answer time. The Vellum
+HUD is specific to the session Vellum built. It adds that session's target,
+active-time estimate, recent pace, and ETA in one small display. These numbers
+are informational and do not change Anki's queue.
 
 ---
 
@@ -235,6 +275,14 @@ session. If the queue has changed because more cards became due, it says so and
 offers the current context instead of claiming it can restore an identical old
 queue. You can also abandon an old session deliberately.
 
+### How this differs from Anki
+
+Anki normally leaves an unfinished deck available, so you can simply study it
+again. Resume adds an explanation around Vellum-generated sessions: what you had
+completed, what was expected to remain, whether the original temporary deck is
+still the same, and whether newly due cards have changed the situation. It does
+not duplicate Anki's scheduling state.
+
 ---
 
 ## Return Ramp
@@ -247,6 +295,13 @@ It does not change the backlog merely because you opened the window. Nothing is
 built until you choose a session. If an unfinished Vellum deck is already
 waiting, Return Ramp points you back to Resume or Finish first.
 
+### How this differs from Anki
+
+Anki already shows the backlog in its deck counts and lets you use Custom Study.
+Return Ramp does not hide or reschedule that backlog. It notices that you have
+been away, puts the current review/learning/new workload in one window, and
+offers smaller Time Machine sessions as a starting point.
+
 ---
 
 ## Backtrack
@@ -258,6 +313,13 @@ you want to compare the last card with the current one.
 Viewing the old card does not answer it again, undo anything, or change its
 scheduling. Backtrack keeps only what it needs for the current Anki run rather
 than building a permanent archive of card contents.
+
+### How this differs from Anki
+
+Anki's Undo command reverses the previous action, and the Browser can preview a
+card if you go and find it. Backtrack does neither. It opens the previous card
+and previous topic for reference while leaving the answer and scheduling history
+alone.
 
 ---
 
@@ -272,6 +334,13 @@ The note can reappear when the same topic returns. There is also a Mind Notes
 history where you can review, replace, or clear your notes. This is the one place
 where Vellum stores prose because it is text you deliberately wrote for
 yourself. It is stored locally and is not added to the Anki card.
+
+### How this differs from Anki
+
+You can already add a field to an Anki note, mark a card, or edit its text. Those
+changes belong to the collection and may sync or affect a shared note. A Mind
+Note is separate Vellum data tied to the parsed topic. It is meant for a private
+reminder to yourself and does not edit the card template or note fields.
 
 ---
 
@@ -294,6 +363,13 @@ can stay on Vellum's Home panel until you mark it done, replace it, or clear it.
 Debrief describes what happened in the session. It does not diagnose mastery,
 predict an exam score, or grade your knowledge.
 
+### How this differs from Anki Stats
+
+Anki Stats is the proper place for collection-wide review history, retention,
+forecasting, and detailed scheduler data. Debrief is much narrower. It explains
+one study session in ordinary terms and can preserve a one-line reminder for the
+next time you open Anki. It does not replace Anki Stats or reinterpret FSRS.
+
 ---
 
 ## Home panel
@@ -310,6 +386,13 @@ what you enable, it can show:
 
 Each block can be turned on or off in Settings.
 
+### How this differs from Anki's deck screen
+
+Anki's deck screen already lists decks and their new, learning, and due counts.
+Vellum leaves that list in place. Its Home panel adds shortcuts and continuity
+information that Anki does not associate with a Vellum session, such as a saved
+handoff or an unfinished generated deck.
+
 ---
 
 ## Topic Health
@@ -321,6 +404,13 @@ to answer “where might I need to look next?”
 It is a rule-based study hint. It is not a mastery score, medical-knowledge
 assessment, or prediction of future performance. You can reset its recent-topic
 data from Settings.
+
+### How this differs from Anki Stats
+
+Anki Stats reports real review and scheduling data. Topic Health takes a small
+set of that local evidence and applies a simple rule to suggest topics that may
+deserve attention. It is deliberately less ambitious than a statistical model,
+and you should use Anki's own statistics when you need the underlying numbers.
 
 ---
 
@@ -334,6 +424,14 @@ temporary deck was removed.
 It does not copy the front or back of those cards into the history. Old sessions
 that predate complete tracking are labelled as reconstructed rather than being
 presented as complete.
+
+### How this differs from Card Info and Anki's review history
+
+Card Info explains the review history of one Anki card. Vellum's generated-deck
+history explains one temporary session: which card IDs were placed in it, where
+they came from, what was answered, and whether Vellum removed its deck. It exists
+mainly for cleanup, recovery, and auditability, not as a replacement for the
+revlog or Browser.
 
 ---
 
@@ -355,6 +453,14 @@ controls for clearing Vellum data.
 
 Vellum refuses to erase the session/deck records it still needs to clean up an
 active temporary deck safely.
+
+### How this differs from Anki's add-on manager
+
+Anki's add-on manager installs, updates, enables, disables, and configures
+add-ons. Vellum's own Settings only control Vellum features and data. Its help
+page explains Vellum commands, and its shortcut check avoids taking a key that
+Anki or another add-on already uses. You still use Anki's add-on manager to
+install, remove, or update Vellum.
 
 ---
 
